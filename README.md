@@ -8,11 +8,11 @@
 
 这个项目是基于 [Cline](https://github.com/cline/cline) 的汉化版本。旨在优化由于英文 prompt 导致 Cline 在中文输入下+国产大模型（如：deepseek）表现不佳的问题, 并提供更符合中文用户习惯的UI界面和功能。
 
-日常使用cline等编程助手时发现使用某些模型推理速度较慢（如deepseek-R1, Claude-3.5-Sonnet），这个项目优先尝试在小模型进行实验，优化prompt, 目前已测试DeepSeek-R1-Distill-Qwen-7B/14B[deepseek-R1]（https://github.com/deepseek-ai/DeepSeek-R1）工作良好，推理速度极快，大大减少等待的时间，推荐大家使用和体验。
+日常使用cline等编程助手时发现使用某些模型推理速度较慢（如deepseek-R1, Claude-3.5-Sonnet），这个项目优先尝试在小模型进行实验，优化prompt, 目前已测试[DeepSeek-R1-Distill-Qwen-7B/14B](https://github.com/deepseek-ai/DeepSeek-R1)工作良好，推理速度极快，大大减少等待的时间，推荐大家使用和体验。
 
 ## 背景
 
-本人是一名AI爱好者+从业者，在日常使用Cline时，发现Cline的UI界面和提示词均为英文，使用中文输入时，有时会出现奇奇怪怪的输出，影响体验。因此，决定自己动手，汉化Cline。
+本人是一名AI爱好者+从业者，在使用Cline时，发现Cline的UI界面和提示词均为英文，使用中文输入时，有时会出现奇奇怪怪的输出，影响体验。因此，决定自己动手，汉化Cline。
 
 ## 版本说明
 
