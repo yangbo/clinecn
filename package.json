@@ -49,49 +49,49 @@
 		"viewsContainers": {
 			"activitybar": [
 				{
-					"id": "cline-chinese-ActivityBar",
+					"id": "cline-ActivityBar",
 					"title": "Cline Chinese",
 					"icon": "assets/icons/icon.svg"
 				}
 			]
 		},
 		"views": {
-			"cline-chinese-ActivityBar": [
+			"cline-ActivityBar": [
 				{
 					"type": "webview",
-					"id": "cline-chinese.SidebarProvider",
+					"id": "cline.SidebarProvider",
 					"name": ""
 				}
 			]
 		},
 		"commands": [
 			{
-				"command": "cline-chinese.plusButtonClicked",
+				"command": "cline.plusButtonClicked",
 				"title": "New Task",
 				"icon": "$(add)"
 			},
 			{
-				"command": "cline-chinese.mcpButtonClicked",
+				"command": "cline.mcpButtonClicked",
 				"title": "MCP Servers",
 				"icon": "$(server)"
 			},
 			{
-				"command": "cline-chinese.historyButtonClicked",
+				"command": "cline.historyButtonClicked",
 				"title": "History",
 				"icon": "$(history)"
 			},
 			{
-				"command": "cline-chinese.popoutButtonClicked",
+				"command": "cline.popoutButtonClicked",
 				"title": "Open in Editor",
 				"icon": "$(link-external)"
 			},
 			{
-				"command": "cline-chinese.settingsButtonClicked",
+				"command": "cline.settingsButtonClicked",
 				"title": "Settings",
 				"icon": "$(settings-gear)"
 			},
 			{
-				"command": "cline-chinese.openInNewTab",
+				"command": "cline.openInNewTab",
 				"title": "Open In New Tab",
 				"category": "Cline Chinese"
 			}
@@ -99,36 +99,36 @@
 		"menus": {
 			"view/title": [
 				{
-					"command": "cline-chinese.plusButtonClicked",
+					"command": "cline.plusButtonClicked",
 					"group": "navigation@1",
-					"when": "view == cline-chinese.SidebarProvider"
+					"when": "view == cline.SidebarProvider"
 				},
 				{
-					"command": "cline-chinese.mcpButtonClicked",
+					"command": "cline.mcpButtonClicked",
 					"group": "navigation@2",
-					"when": "view == cline-chinese.SidebarProvider"
+					"when": "view == cline.SidebarProvider"
 				},
 				{
-					"command": "cline-chinese.historyButtonClicked",
+					"command": "cline.historyButtonClicked",
 					"group": "navigation@3",
-					"when": "view == cline-chinese.SidebarProvider"
+					"when": "view == cline.SidebarProvider"
 				},
 				{
-					"command": "cline-chinese.popoutButtonClicked",
+					"command": "cline.popoutButtonClicked",
 					"group": "navigation@4",
-					"when": "view == cline-chinese.SidebarProvider"
+					"when": "view == cline.SidebarProvider"
 				},
 				{
-					"command": "cline-chinese.settingsButtonClicked",
+					"command": "cline.settingsButtonClicked",
 					"group": "navigation@5",
-					"when": "view == cline-chinese.SidebarProvider"
+					"when": "view == cline.SidebarProvider"
 				}
 			]
 		},
 		"configuration": {
 			"title": "Cline Chinese",
 			"properties": {
-				"cline-chinese.vsCodeLmModelSelector": {
+				"cline.vsCodeLmModelSelector": {
 					"type": "object",
 					"properties": {
 						"vendor": {
@@ -142,7 +142,7 @@
 					},
 					"description": "Settings for VSCode Language Model API"
 				},
-				"cline-chinese.mcp.mode": {
+				"cline.mcp.mode": {
 					"type": "string",
 					"enum": [
 						"full",
@@ -157,7 +157,7 @@
 					"default": "full",
 					"description": "Controls MCP inclusion in prompts, reduces token usage if you only need access to certain functionality."
 				},
-				"cline-chinese.enableCheckpoints": {
+				"cline.enableCheckpoints": {
 					"type": "boolean",
 					"default": true,
 					"description": "Enables extension to save checkpoints of workspace throughout the task."

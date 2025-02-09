@@ -199,7 +199,7 @@ const AutoApproveMenu = ({ style }: AutoApproveMenuProps) => {
 							overflow: "hidden",
 							textOverflow: "ellipsis",
 						}}>
-						{enabledActions.length === 0 ? "无" : enabledActionsList}
+						{enabledActions.length === 0 ? "None" : enabledActionsList}
 					</span>
 					<span
 						className={`codicon codicon-chevron-${isExpanded ? "down" : "right"}`}
