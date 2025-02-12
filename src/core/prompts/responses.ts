@@ -1,13 +1,17 @@
 import { Anthropic } from "@anthropic-ai/sdk"
-import * as path from "path"
 import * as diff from "diff"
+import * as path from "path"
+import { ClineIgnoreController, LOCK_TEXT_SYMBOL } from "../ignore/ClineIgnoreController"
 
 export const formatResponse = {
 	toolDenied: () => `用户拒绝了此操作。`,
 
 	toolDeniedWithFeedback: (feedback?: string) => `用户拒绝了此操作并提供了以下反馈：\n<feedback>\n${feedback}\n</feedback>`,
 
-	toolError: (error?: string) => `工具执行失败，错误信息如下：\n<e>\n${error}\n</e>`,
+	toolError: (error?: string) => `The tool execution failed with the following error:\n<error>\n${error}\n</error>`,
+
+	clineIgnoreError: (path: string) =>
+		`Access to ${path} is blocked by the .clineignore file settings. You must try to continue in the task without using this file, or ask the user to update the .clineignore file.`,
 
 	noToolsUsed: () =>
 		`[错误] 您在上一个响应中没有使用任何工具！请使用工具重试。
@@ -45,7 +49,12 @@ ${toolUseInstructionsReminder}
 		return formatImagesIntoBlocks(images)
 	},
 
-	formatFilesList: (absolutePath: string, files: string[], didHitLimit: boolean): string => {
+	formatFilesList: (
+		absolutePath: string,
+		files: string[],
+		didHitLimit: boolean,
+		clineIgnoreController?: ClineIgnoreController,
+	): string => {
 		const sorted = files
 			.map((file) => {
 				// 将绝对路径转换为相对路径
@@ -77,12 +86,30 @@ ${toolUseInstructionsReminder}
 				// 则较短的排在前面
 				return aParts.length - bParts.length
 			})
+
+		const clineIgnoreParsed = clineIgnoreController
+			? sorted.map((filePath) => {
+					// path is relative to absolute path, not cwd
+					// validateAccess expects either path relative to cwd or absolute path
+					// otherwise, for validating against ignore patterns like "assets/icons", we would end up with just "icons", which would result in the path not being ignored.
+					const absoluteFilePath = path.resolve(absolutePath, filePath)
+					const isIgnored = !clineIgnoreController.validateAccess(absoluteFilePath)
+					if (isIgnored) {
+						return LOCK_TEXT_SYMBOL + " " + filePath
+					}
+
+					return filePath
+				})
+			: sorted
+
 		if (didHitLimit) {
-			return `${sorted.join("\n")}\n\n(文件列表已截断。如果需要进一步探索，请对特定子目录使用 list_files。)`
-		} else if (sorted.length === 0 || (sorted.length === 1 && sorted[0] === "")) {
-			return "未找到文件。"
+			return `${clineIgnoreParsed.join(
+				"\n",
+			)}\n\n(File list truncated. Use list_files on specific subdirectories if you need to explore further.)`
+		} else if (clineIgnoreParsed.length === 0 || (clineIgnoreParsed.length === 1 && clineIgnoreParsed[0] === "")) {
+			return "No files found."
 		} else {
-			return sorted.join("\n")
+			return clineIgnoreParsed.join("\n")
 		}
 	},
 

@@ -3,10 +3,14 @@ import * as path from "path"
 import { listFiles } from "../glob/list-files"
 import { LanguageParser, loadRequiredLanguageParsers } from "./languageParser"
 import { fileExistsAtPath } from "../../utils/fs"
+import { ClineIgnoreController } from "../../core/ignore/ClineIgnoreController"
 
-// TODO: 实现缓存行为以避免每次新任务都要重新分析项目。
-export async function parseSourceCodeForDefinitionsTopLevel(dirPath: string): Promise<string> {
-	// 检查路径是否存在
+// TODO: implement caching behavior to avoid having to keep analyzing project for new tasks.
+export async function parseSourceCodeForDefinitionsTopLevel(
+	dirPath: string,
+	clineIgnoreController?: ClineIgnoreController,
+): Promise<string> {
+	// check if the path exists
 	const dirExists = await fileExistsAtPath(path.resolve(dirPath))
 	if (!dirExists) {
 		return "该目录不存在或您没有访问权限。"
@@ -24,10 +28,14 @@ export async function parseSourceCodeForDefinitionsTopLevel(dirPath: string): Pr
 
 	// 解析我们有语言解析器的特定文件
 	// const filesWithoutDefinitions: string[] = []
-	for (const file of filesToParse) {
-		const definitions = await parseFile(file, languageParsers)
+
+	// Filter filepaths for access if controller is provided
+	const allowedFilesToParse = clineIgnoreController ? clineIgnoreController.filterPaths(filesToParse) : filesToParse
+
+	for (const filePath of allowedFilesToParse) {
+		const definitions = await parseFile(filePath, languageParsers, clineIgnoreController)
 		if (definitions) {
-			result += `${path.relative(dirPath, file).toPosix()}\n${definitions}\n`
+			result += `${path.relative(dirPath, filePath).toPosix()}\n${definitions}\n`
 		}
 		// else {
 		// 	filesWithoutDefinitions.push(file)
@@ -98,7 +106,14 @@ function separateFiles(allFiles: string[]): {
 - https://github.com/tree-sitter/tree-sitter/blob/master/lib/binding_web/test/helper.js
 - https://tree-sitter.github.io/tree-sitter/code-navigation-systems
 */
-async function parseFile(filePath: string, languageParsers: LanguageParser): Promise<string | undefined> {
+async function parseFile(
+	filePath: string,
+	languageParsers: LanguageParser,
+	clineIgnoreController?: ClineIgnoreController,
+): Promise<string | null> {
+	if (clineIgnoreController && !clineIgnoreController.validateAccess(filePath)) {
+		return null
+	}
 	const fileContent = await fs.readFile(filePath, "utf8")
 	const ext = path.extname(filePath).toLowerCase().slice(1)
 
@@ -159,5 +174,5 @@ async function parseFile(filePath: string, languageParsers: LanguageParser): Pro
 	if (formattedOutput.length > 0) {
 		return `|----\n${formattedOutput}|----\n`
 	}
-	return undefined
+	return null
 }

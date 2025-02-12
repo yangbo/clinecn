@@ -950,13 +950,21 @@ ${
 4. 完成用户任务后，你必须使用 attempt_completion 工具向用户展示任务结果。你也可以提供 CLI 命令来展示任务结果；这在网页开发任务中特别有用，例如可以运行 \`open index.html\` 来显示你构建的网站。
 
 5. 用户可能会提供反馈，你可以用这些反馈进行改进并重试。但是不要进行无意义的来回对话，即不要在回复结束时提出问题或提供进一步的帮助。`
-export function addUserInstructions(settingsCustomInstructions?: string, clineRulesFileInstructions?: string) {
+
+export function addUserInstructions(
+	settingsCustomInstructions?: string,
+	clineRulesFileInstructions?: string,
+	clineIgnoreInstructions?: string,
+) {
 	let customInstructions = ""
 	if (settingsCustomInstructions) {
 		customInstructions += settingsCustomInstructions + "\n\n"
 	}
 	if (clineRulesFileInstructions) {
-		customInstructions += clineRulesFileInstructions
+		customInstructions += clineRulesFileInstructions + "\n\n"
+	}
+	if (clineIgnoreInstructions) {
+		customInstructions += clineIgnoreInstructions
 	}
 
 	return `

@@ -1,33 +1,25 @@
 {
-  "env": {
-    "browser": true,
-    "es2021": true,
-    "node": true
-  },
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended"
-  ],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaVersion": "latest",
-    "sourceType": "module"
-  },
-  "plugins": [
-    "@typescript-eslint"
-  ],
-  "rules": {
-    "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/no-unused-vars": "off",
-    "@typescript-eslint/ban-ts-comment": "off",
-    "no-case-declarations": "off",
-    "no-mixed-spaces-and-tabs": "off",
-    "prefer-const": "off",
-    "no-useless-escape": "off",
-    "no-control-regex": "off",
-    "no-empty": "off",
-    "no-extra-semi": "off",
-    "@typescript-eslint/no-namespace": "off",
-    "require-yield": "off"
-  }
+	"root": true,
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"ecmaVersion": 6,
+		"sourceType": "module"
+	},
+	"plugins": ["@typescript-eslint"],
+	"rules": {
+		"@typescript-eslint/naming-convention": [
+			"warn",
+			{
+				"selector": "import",
+				"format": ["camelCase", "PascalCase"]
+			}
+		],
+		"@typescript-eslint/semi": "off",
+		"curly": "warn",
+		"eqeqeq": "warn",
+		"no-throw-literal": "warn",
+		"semi": "off",
+		"react-hooks/exhaustive-deps": "off"
+	},
+	"ignorePatterns": ["out", "dist", "**/*.d.ts"]
 }
