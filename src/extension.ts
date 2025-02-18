@@ -20,11 +20,11 @@ let outputChannel: vscode.OutputChannel
 
 // 当扩展第一次被激活时调用此方法
 export function activate(context: vscode.ExtensionContext) {
-	outputChannel = vscode.window.createOutputChannel("Cline")
+	outputChannel = vscode.window.createOutputChannel("ClineCN")
 	context.subscriptions.push(outputChannel)
 
 	Logger.initialize(outputChannel)
-	Logger.log("Cline 扩展已激活")
+	Logger.log("ClineCN 扩展已激活")
 
 	const sidebarProvider = new ClineProvider(context, outputChannel)
 
@@ -35,7 +35,7 @@ export function activate(context: vscode.ExtensionContext) {
 	)
 
 	context.subscriptions.push(
-		vscode.commands.registerCommand("cline.plusButtonClicked", async () => {
+		vscode.commands.registerCommand("clinecn.plusButtonClicked", async () => {
 			Logger.log("点击了加号按钮")
 			await sidebarProvider.clearTask()
 			await sidebarProvider.postStateToWebview()
@@ -47,7 +47,7 @@ export function activate(context: vscode.ExtensionContext) {
 	)
 
 	context.subscriptions.push(
-		vscode.commands.registerCommand("cline.mcpButtonClicked", () => {
+		vscode.commands.registerCommand("clinecn.mcpButtonClicked", () => {
 			sidebarProvider.postMessageToWebview({
 				type: "action",
 				action: "mcpButtonClicked",
@@ -56,7 +56,7 @@ export function activate(context: vscode.ExtensionContext) {
 	)
 
 	const openClineInNewTab = async () => {
-		Logger.log("在新标签页中打开 Cline")
+		Logger.log("在新标签页中打开 ClineCN")
 		const tabProvider = new ClineProvider(context, outputChannel)
 		const lastCol = Math.max(...vscode.window.visibleTextEditors.map((editor) => editor.viewColumn || 0))
 
@@ -85,11 +85,11 @@ export function activate(context: vscode.ExtensionContext) {
 		await vscode.commands.executeCommand("workbench.action.lockEditorGroup")
 	}
 
-	context.subscriptions.push(vscode.commands.registerCommand("cline.popoutButtonClicked", openClineInNewTab))
-	context.subscriptions.push(vscode.commands.registerCommand("cline.openInNewTab", openClineInNewTab))
+	context.subscriptions.push(vscode.commands.registerCommand("clinecn.popoutButtonClicked", openClineInNewTab))
+	context.subscriptions.push(vscode.commands.registerCommand("clinecn.openInNewTab", openClineInNewTab))
 
 	context.subscriptions.push(
-		vscode.commands.registerCommand("cline.settingsButtonClicked", () => {
+		vscode.commands.registerCommand("clinecn.settingsButtonClicked", () => {
 			sidebarProvider.postMessageToWebview({
 				type: "action",
 				action: "settingsButtonClicked",
@@ -98,7 +98,7 @@ export function activate(context: vscode.ExtensionContext) {
 	)
 
 	context.subscriptions.push(
-		vscode.commands.registerCommand("cline.historyButtonClicked", () => {
+		vscode.commands.registerCommand("clinecn.historyButtonClicked", () => {
 			sidebarProvider.postMessageToWebview({
 				type: "action",
 				action: "historyButtonClicked",
@@ -107,7 +107,7 @@ export function activate(context: vscode.ExtensionContext) {
 	)
 
 	context.subscriptions.push(
-		vscode.commands.registerCommand("cline.accountLoginClicked", () => {
+		vscode.commands.registerCommand("clinecn.accountLoginClicked", () => {
 			sidebarProvider.postMessageToWebview({
 				type: "action",
 				action: "accountLoginClicked",
@@ -185,5 +185,5 @@ export function activate(context: vscode.ExtensionContext) {
 
 // 当扩展被停用时调用此方法
 export function deactivate() {
-	Logger.log("Cline 扩展已停用")
+	Logger.log("ClineCN 扩展已停用")
 }
