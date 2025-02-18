@@ -4,7 +4,7 @@
     <bx:guide x="45.54584571550376" y="6.181964345598516" angle="0"/>
     <bx:guide x="128.95380785064063" y="14.501959302190244" angle="0"/>
     <linearGradient id="a">
-      <stop stop-color="#f00" offset="0"/>
+      <stop offset="0" style="stop-color: rgba(163, 0, 0, 0.643);"/>
       <stop stop-color="#b10000" offset="1"/>
     </linearGradient>
     <linearGradient id="k" x1="371.65" x2="381.72" y1="545.58" y2="514.35" gradientUnits="userSpaceOnUse" href="#a"/>
@@ -27,6 +27,11 @@
     <linearGradient id="a-8" x1="388.03" x2="361.6" y1="595.93" y2="576.74" gradientUnits="userSpaceOnUse" href="#a"/>
     <linearGradient id="a-9" x1="371.65" x2="361.61" y1="545.58" y2="576.75" gradientUnits="userSpaceOnUse" href="#a"/>
     <linearGradient id="a-10" x1="371.65" x2="381.72" y1="545.58" y2="514.35" gradientUnits="userSpaceOnUse" href="#a"/>
+    <bx:export>
+      <bx:file format="png" path="icon.png" width="128" height="128"/>
+      <bx:file format="png" path="robot_panel_dark.png" background="#fff" width="29" height="30"/>
+      <bx:file format="png" path="robot_panel_light.png" width="29" height="30"/>
+    </bx:export>
     <linearGradient id="a-11" x1="414.41" x2="381.62" y1="514.19" y2="514.68" gradientUnits="userSpaceOnUse" href="#a"/>
     <linearGradient id="a-12" x1="414.41" x2="447.06" y1="514.19" y2="514.04" gradientUnits="userSpaceOnUse" href="#a"/>
     <linearGradient id="a-13" x1="457.39" x2="447.39" y1="545.47" y2="514.04" gradientUnits="userSpaceOnUse" href="#a"/>
@@ -37,11 +42,6 @@
     <linearGradient id="a-18" x1="388.03" x2="361.6" y1="595.93" y2="576.74" gradientUnits="userSpaceOnUse" href="#a"/>
     <linearGradient id="a-19" x1="371.65" x2="361.61" y1="545.58" y2="576.75" gradientUnits="userSpaceOnUse" href="#a"/>
     <linearGradient id="a-20" x1="371.65" x2="381.72" y1="545.58" y2="514.35" gradientUnits="userSpaceOnUse" href="#a"/>
-    <bx:export>
-      <bx:file format="png" path="icon.png" width="128" height="128"/>
-      <bx:file format="png" path="robot_panel_dark.png" background="#fff" width="29" height="30"/>
-      <bx:file format="png" path="robot_panel_light.png" width="29" height="30"/>
-    </bx:export>
   </defs>
   <title>Group Copy 2</title>
   <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -72,7 +72,7 @@
   </g>
   <g transform="matrix(1, 0, 0, 1, -8.021347, 0.572945)">
     <title>hand</title>
-    <ellipse style="stroke: rgb(0, 0, 0); stroke-width: 5px; fill: none;" cx="21.879" cy="85.247" rx="10.982" ry="7.162"/>
+    <ellipse style="stroke-width: 5px; fill: none; stroke: rgb(36, 41, 47);" cx="21.879" cy="85.247" rx="10.982" ry="7.162"/>
     <g transform="matrix(0.038442, 0, 0, 0.038442, 5.559817, 63.889794)" style="">
       <path d="m498.69 674.7-84.295-59.618-83.476 59.917 30.694-98.251-82.822-61.216 102.83-0.84976 32.723-98.006 32.995 98.208 102.91 0.16249-82.679 61.368z" fill="#f00"/>
       <path d="m414.32 559.35-32.709-44.666 32.501-100.82z" fill="url(#a-1)"/>
@@ -89,8 +89,8 @@
   </g>
   <g transform="matrix(1, 0, 0, 1, 56.627252, 0.930736)">
     <title>hand</title>
-    <ellipse style="stroke: rgb(0, 0, 0); stroke-width: 5px; fill: none;" cx="21.879" cy="85.247" rx="10.982" ry="7.162"/>
-    <g transform="matrix(0.038442, 0, 0, 0.038442, 5.559817, 63.889794)" style="">
+    <ellipse style="stroke-width: 5px; fill: none; stroke: rgb(36, 41, 47);" cx="21.879" cy="85.247" rx="10.982" ry="7.162"/>
+    <g transform="matrix(0.038442, 0, 0, 0.038442, 5.792221, 64.119241)" style="">
       <path d="m498.69 674.7-84.295-59.618-83.476 59.917 30.694-98.251-82.822-61.216 102.83-0.84976 32.723-98.006 32.995 98.208 102.91 0.16249-82.679 61.368z" fill="#f00"/>
       <path d="m414.32 559.35-32.709-44.666 32.501-100.82z" fill="url(#a-11)"/>
       <path d="m447.16 514.36-32.749 45.109-0.29578-145.61z" fill="url(#a-12)"/>
