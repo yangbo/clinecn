@@ -1,16 +1,107 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="92px" height="96px" viewBox="0 0 92 96" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>Group Copy 2</title>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="icon-copy" transform="translate(-34, -40)" fill="#24292F">
-            <g id="Group-Copy-2" transform="translate(34, 40.5)">
-                <g id="Group-3-Copy-4" transform="translate(0, 0)">
-                    <path d="M65.4492701,16.3 C76.3374701,16.3 85.1635558,25.16479 85.1635558,36.1 L85.1635558,42.7 L90.9027661,54.1647464 C91.4694141,55.2966923 91.4668177,56.6300535 90.8957658,57.7597839 L85.1635558,69.1 L85.1635558,75.7 C85.1635558,86.63554 76.3374701,95.5 65.4492701,95.5 L26.0206986,95.5 C15.1328272,95.5 6.30641291,86.63554 6.30641291,75.7 L6.30641291,69.1 L0.448507752,57.7954874 C-0.14693501,56.6464093 -0.149634367,55.2802504 0.441262896,54.1288283 L6.30641291,42.7 L6.30641291,36.1 C6.30641291,25.16479 15.1328272,16.3 26.0206986,16.3 L65.4492701,16.3 Z M62.9301895,22 L29.189529,22 C19.8723267,22 12.3191987,29.5552188 12.3191987,38.875 L12.3191987,44.5 L7.44288578,53.9634655 C6.84794449,55.1180686 6.85066096,56.4896598 7.45017099,57.6418974 L12.3191987,67 L12.3191987,72.625 C12.3191987,81.9450625 19.8723267,89.5 29.189529,89.5 L62.9301895,89.5 C72.2476729,89.5 79.8005198,81.9450625 79.8005198,72.625 L79.8005198,67 L84.5682187,57.6061395 C85.1432011,56.473244 85.1458141,55.1345713 84.5752587,53.9994398 L79.8005198,44.5 L79.8005198,38.875 C79.8005198,29.5552188 72.2476729,22 62.9301895,22 Z" id="Combined-Shape" fill-rule="nonzero"></path>
-                    <circle id="Oval" cx="45.7349843" cy="11" r="11"></circle>
-                </g>
-                <rect id="Rectangle-Copy" stroke="#24292F" stroke-width="8" x="31" y="44.5" width="5" height="22" rx="2.5"></rect>
-                <rect id="Rectangle-Copy-2" stroke="#24292F" stroke-width="8" x="55" y="44.5" width="5" height="22" rx="2.5"></rect>
-            </g>
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="128px" height="128px" viewBox="0 0 92 96" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <bx:guide x="45.54584571550376" y="6.181964345598516" angle="0"/>
+    <bx:guide x="128.95380785064063" y="14.501959302190244" angle="0"/>
+    <linearGradient id="a">
+      <stop stop-color="#f00" offset="0"/>
+      <stop stop-color="#b10000" offset="1"/>
+    </linearGradient>
+    <linearGradient id="k" x1="371.65" x2="381.72" y1="545.58" y2="514.35" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="j" x1="371.65" x2="361.61" y1="545.58" y2="576.75" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="i" x1="388.03" x2="361.6" y1="595.93" y2="576.74" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="h" x1="388.03" x2="414.41" y1="595.93" y2="615.09" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="g" x1="440.98" x2="414.41" y1="595.74" y2="615.09" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="f" x1="440.98" x2="467.57" y1="595.74" y2="576.41" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="e" x1="457.39" x2="467.61" y1="545.47" y2="576.53" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="d" x1="457.39" x2="447.39" y1="545.47" y2="514.04" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="c" x1="414.41" x2="447.06" y1="514.19" y2="514.04" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="b" x1="414.41" x2="381.62" y1="514.19" y2="514.68" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="a-1" x1="414.41" x2="381.62" y1="514.19" y2="514.68" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="a-2" x1="414.41" x2="447.06" y1="514.19" y2="514.04" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="a-3" x1="457.39" x2="447.39" y1="545.47" y2="514.04" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="a-4" x1="457.39" x2="467.61" y1="545.47" y2="576.53" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="a-5" x1="440.98" x2="467.57" y1="595.74" y2="576.41" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="a-6" x1="440.98" x2="414.41" y1="595.74" y2="615.09" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="a-7" x1="388.03" x2="414.41" y1="595.93" y2="615.09" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="a-8" x1="388.03" x2="361.6" y1="595.93" y2="576.74" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="a-9" x1="371.65" x2="361.61" y1="545.58" y2="576.75" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="a-10" x1="371.65" x2="381.72" y1="545.58" y2="514.35" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="a-11" x1="414.41" x2="381.62" y1="514.19" y2="514.68" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="a-12" x1="414.41" x2="447.06" y1="514.19" y2="514.04" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="a-13" x1="457.39" x2="447.39" y1="545.47" y2="514.04" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="a-14" x1="457.39" x2="467.61" y1="545.47" y2="576.53" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="a-15" x1="440.98" x2="467.57" y1="595.74" y2="576.41" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="a-16" x1="440.98" x2="414.41" y1="595.74" y2="615.09" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="a-17" x1="388.03" x2="414.41" y1="595.93" y2="615.09" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="a-18" x1="388.03" x2="361.6" y1="595.93" y2="576.74" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="a-19" x1="371.65" x2="361.61" y1="545.58" y2="576.75" gradientUnits="userSpaceOnUse" href="#a"/>
+    <linearGradient id="a-20" x1="371.65" x2="381.72" y1="545.58" y2="514.35" gradientUnits="userSpaceOnUse" href="#a"/>
+    <bx:export>
+      <bx:file format="png" path="icon.png" width="128" height="128"/>
+      <bx:file format="png" path="robot_panel_dark.png" background="#fff" width="29" height="30"/>
+      <bx:file format="png" path="robot_panel_light.png" width="29" height="30"/>
+    </bx:export>
+  </defs>
+  <title>Group Copy 2</title>
+  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <title>head</title>
+    <g id="icon-copy" transform="translate(-34, -40)" fill="#24292F">
+      <g id="Group-Copy-2" transform="translate(34, 40.5)">
+        <g style="" transform="matrix(0.85593, 0, 0, 0.729166, 7.259196, 5.414602)">
+          <path d="M65.4492701,16.3 C76.3374701,16.3 85.1635558,25.16479 85.1635558,36.1 L85.1635558,42.7 L90.9027661,54.1647464 C91.4694141,55.2966923 91.4668177,56.6300535 90.8957658,57.7597839 L85.1635558,69.1 L85.1635558,75.7 C85.1635558,86.63554 76.3374701,95.5 65.4492701,95.5 L26.0206986,95.5 C15.1328272,95.5 6.30641291,86.63554 6.30641291,75.7 L6.30641291,69.1 L0.448507752,57.7954874 C-0.14693501,56.6464093 -0.149634367,55.2802504 0.441262896,54.1288283 L6.30641291,42.7 L6.30641291,36.1 C6.30641291,25.16479 15.1328272,16.3 26.0206986,16.3 L65.4492701,16.3 Z M62.9301895,22 L29.189529,22 C19.8723267,22 12.3191987,29.5552188 12.3191987,38.875 L12.3191987,44.5 L7.44288578,53.9634655 C6.84794449,55.1180686 6.85066096,56.4896598 7.45017099,57.6418974 L12.3191987,67 L12.3191987,72.625 C12.3191987,81.9450625 19.8723267,89.5 29.189529,89.5 L62.9301895,89.5 C72.2476729,89.5 79.8005198,81.9450625 79.8005198,72.625 L79.8005198,67 L84.5682187,57.6061395 C85.1432011,56.473244 85.1458141,55.1345713 84.5752587,53.9994398 L79.8005198,44.5 L79.8005198,38.875 C79.8005198,29.5552188 72.2476729,22 62.9301895,22 Z" id="Combined-Shape" fill-rule="nonzero"/>
+          <rect id="Rectangle-Copy" stroke="#24292F" stroke-width="8" x="31" y="44.5" width="5" height="22" rx="2.5"/>
+          <rect id="Rectangle-Copy-2" stroke="#24292F" stroke-width="8" x="55" y="44.5" width="5" height="22" rx="2.5"/>
         </g>
+      </g>
     </g>
+  </g>
+  <g transform="matrix(0.066707, 0, 0, 0.066707, 18.074047, -27.257264)">
+    <title>top-star</title>
+    <path d="m498.69 674.7-84.295-59.618-83.476 59.917 30.694-98.251-82.822-61.216 102.83-0.84976 32.723-98.006 32.995 98.208 102.91 0.16249-82.679 61.368z" fill="#f00"/>
+    <path d="m414.32 559.35-32.709-44.666 32.501-100.82z" fill="url(#b)"/>
+    <path d="m447.16 514.36-32.749 45.109-0.29578-145.61z" fill="url(#c)"/>
+    <path d="m553.05 514.25-105.89 0.10868-32.552 45.08z" fill="url(#d)"/>
+    <path d="m467.57 576.41-52.955-16.975 138.44-45.189z" fill="url(#e)"/>
+    <path d="m414.41 559.37 53.192 17.159 33.16 100.85z" fill="url(#f)"/>
+    <path d="m414.41 615.06-0.0884-55.718 86.441 118.04z" fill="url(#g)"/>
+    <path d="m414.61 559.44-85.304 117.51 85.085-61.871z" fill="url(#h)"/>
+    <path d="m361.61 576.74 52.802-17.2-85.107 117.41z" fill="url(#i)"/>
+    <path d="m414.41 559.54-138.04-44.691 85.234 61.891z" fill="url(#j)"/>
+    <path d="m381.38 514.35 33.072 45.141-138.07-44.645z" fill="url(#k)"/>
+  </g>
+  <g transform="matrix(1, 0, 0, 1, -8.021347, 0.572945)">
+    <title>hand</title>
+    <ellipse style="stroke: rgb(0, 0, 0); stroke-width: 5px; fill: none;" cx="21.879" cy="85.247" rx="10.982" ry="7.162"/>
+    <g transform="matrix(0.038442, 0, 0, 0.038442, 5.559817, 63.889794)" style="">
+      <path d="m498.69 674.7-84.295-59.618-83.476 59.917 30.694-98.251-82.822-61.216 102.83-0.84976 32.723-98.006 32.995 98.208 102.91 0.16249-82.679 61.368z" fill="#f00"/>
+      <path d="m414.32 559.35-32.709-44.666 32.501-100.82z" fill="url(#a-1)"/>
+      <path d="m447.16 514.36-32.749 45.109-0.29578-145.61z" fill="url(#a-2)"/>
+      <path d="m553.05 514.25-105.89 0.10868-32.552 45.08z" fill="url(#a-3)"/>
+      <path d="m467.57 576.41-52.955-16.975 138.44-45.189z" fill="url(#a-4)"/>
+      <path d="m414.41 559.37 53.192 17.159 33.16 100.85z" fill="url(#a-5)"/>
+      <path d="m414.41 615.06-0.0884-55.718 86.441 118.04z" fill="url(#a-6)"/>
+      <path d="m414.61 559.44-85.304 117.51 85.085-61.871z" fill="url(#a-7)"/>
+      <path d="m361.61 576.74 52.802-17.2-85.107 117.41z" fill="url(#a-8)"/>
+      <path d="m414.41 559.54-138.04-44.691 85.234 61.891z" fill="url(#a-9)"/>
+      <path d="m381.38 514.35 33.072 45.141-138.07-44.645z" fill="url(#a-10)"/>
+    </g>
+  </g>
+  <g transform="matrix(1, 0, 0, 1, 56.627252, 0.930736)">
+    <title>hand</title>
+    <ellipse style="stroke: rgb(0, 0, 0); stroke-width: 5px; fill: none;" cx="21.879" cy="85.247" rx="10.982" ry="7.162"/>
+    <g transform="matrix(0.038442, 0, 0, 0.038442, 5.559817, 63.889794)" style="">
+      <path d="m498.69 674.7-84.295-59.618-83.476 59.917 30.694-98.251-82.822-61.216 102.83-0.84976 32.723-98.006 32.995 98.208 102.91 0.16249-82.679 61.368z" fill="#f00"/>
+      <path d="m414.32 559.35-32.709-44.666 32.501-100.82z" fill="url(#a-11)"/>
+      <path d="m447.16 514.36-32.749 45.109-0.29578-145.61z" fill="url(#a-12)"/>
+      <path d="m553.05 514.25-105.89 0.10868-32.552 45.08z" fill="url(#a-13)"/>
+      <path d="m467.57 576.41-52.955-16.975 138.44-45.189z" fill="url(#a-14)"/>
+      <path d="m414.41 559.37 53.192 17.159 33.16 100.85z" fill="url(#a-15)"/>
+      <path d="m414.41 615.06-0.0884-55.718 86.441 118.04z" fill="url(#a-16)"/>
+      <path d="m414.61 559.44-85.304 117.51 85.085-61.871z" fill="url(#a-17)"/>
+      <path d="m361.61 576.74 52.802-17.2-85.107 117.41z" fill="url(#a-18)"/>
+      <path d="m414.41 559.54-138.04-44.691 85.234 61.891z" fill="url(#a-19)"/>
+      <path d="m381.38 514.35 33.072 45.141-138.07-44.645z" fill="url(#a-20)"/>
+    </g>
+  </g>
 </svg>
