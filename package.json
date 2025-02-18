@@ -57,7 +57,7 @@
 			"activitybar": [
 				{
 					"id": "clinecn-ActivityBar",
-					"title": "ClineCN",
+					"title": "中文版Cline",
 					"icon": "assets/icons/icon.svg"
 				}
 			]
@@ -135,7 +135,7 @@
 		"configuration": {
 			"title": "Cline CN - Cline中文版",
 			"properties": {
-				"cline.vsCodeLmModelSelector": {
+				"clinecn.vsCodeLmModelSelector": {
 					"type": "object",
 					"properties": {
 						"vendor": {
@@ -149,7 +149,7 @@
 					},
 					"description": "VSCode大语言模型API设置"
 				},
-				"cline.mcp.mode": {
+				"clinecn.mcp.mode": {
 					"type": "string",
 					"enum": [
 						"full",
@@ -164,17 +164,17 @@
 					"default": "full",
 					"description": "控制MCP在提示词中的包含情况，如果仅需要访问某些功能，则可减少token的使用。"
 				},
-				"cline.enableCheckpoints": {
+				"clinecn.enableCheckpoints": {
 					"type": "boolean",
 					"default": true,
 					"description": "允许扩展在任务过程中保存工作区检查点。"
 				},
-				"cline.disableBrowserTool": {
+				"clinecn.disableBrowserTool": {
 					"type": "boolean",
 					"default": false,
 					"description": "禁止扩展启动浏览器会话。"
 				},
-				"cline.modelSettings.o3Mini.reasoningEffort": {
+				"clinecn.modelSettings.o3Mini.reasoningEffort": {
 					"type": "string",
 					"enum": [
 						"low",
@@ -184,7 +184,7 @@
 					"default": "medium",
 					"description": "控制使用 o3-mini 模型时的推理努力程度。更高的值可能会产生更全面但更慢的响应。"
 				},
-				"cline.chromeExecutablePath": {
+				"clinecn.chromeExecutablePath": {
 					"type": "string",
 					"default": null,
 					"description": "Chrome 可执行文件的路径，用于浏览器功能。如果未设置，扩展将尝试自动查找或下载。"
