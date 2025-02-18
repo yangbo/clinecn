@@ -111,7 +111,7 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 		readonly context: vscode.ExtensionContext,
 		private readonly outputChannel: vscode.OutputChannel,
 	) {
-		this.outputChannel.appendLine("ClineProvider instantiated")
+		this.outputChannel.appendLine("ClineProvider 已初始化")
 		ClineProvider.activeInstances.add(this)
 		this.workspaceTracker = new WorkspaceTracker(this)
 		this.mcpHub = new McpHub(this)
@@ -173,7 +173,7 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 		//context: vscode.WebviewViewResolveContext<unknown>, used to recreate a deallocated webview, but we don't need this since we use retainContextWhenHidden
 		//token: vscode.CancellationToken
 	): void | Thenable<void> {
-		this.outputChannel.appendLine("Resolving webview view")
+		this.outputChannel.appendLine("正在准备 webview view")
 		this.view = webviewView
 
 		webviewView.webview.options = {
