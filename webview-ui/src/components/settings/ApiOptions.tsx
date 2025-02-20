@@ -330,7 +330,7 @@ const ApiOptions = ({ showModelOptions, apiErrorMessage, modelIdErrorMessage, is
 								position: "relative",
 							}}>
 							<VSCodeOption value="china">中国 API</VSCodeOption>
-							<VSCodeOption value="nternational">国际 API</VSCodeOption>
+							<VSCodeOption value="international">国际 API</VSCodeOption>
 						</VSCodeDropdown>
 					</DropdownContainer>
 					<p

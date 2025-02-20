@@ -119,17 +119,18 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 	}
 
 	/*
-	VSCode extensions use the disposable pattern to clean up resources when the sidebar/editor tab is closed by the user or system. This applies to event listening, commands, interacting with the UI, etc.
+	VSCode extensions use the disposable pattern to clean up resources when the sidebar/editor tab is closed by the user or system. 
+	This applies to event listening, commands, interacting with the UI, etc.
 	- https://vscode-docs.readthedocs.io/en/stable/extensions/patterns-and-principles/
 	- https://github.com/microsoft/vscode-extension-samples/blob/main/webview-sample/src/extension.ts
 	*/
 	async dispose() {
-		this.outputChannel.appendLine("Disposing ClineProvider...")
+		this.outputChannel.appendLine("销毁 ClineProvider 中...")
 		await this.clearTask()
-		this.outputChannel.appendLine("Cleared task")
+		this.outputChannel.appendLine("task 已清除")
 		if (this.view && "dispose" in this.view) {
 			this.view.dispose()
-			this.outputChannel.appendLine("Disposed webview")
+			this.outputChannel.appendLine("webview 已销毁")
 		}
 		while (this.disposables.length) {
 			const x = this.disposables.pop()
@@ -173,7 +174,7 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 		//context: vscode.WebviewViewResolveContext<unknown>, used to recreate a deallocated webview, but we don't need this since we use retainContextWhenHidden
 		//token: vscode.CancellationToken
 	): void | Thenable<void> {
-		this.outputChannel.appendLine("正在准备 webview view")
+		this.outputChannel.appendLine("正在准备 webview 视图")
 		this.view = webviewView
 
 		webviewView.webview.options = {
@@ -251,7 +252,7 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 		// if the extension is starting a new session, clear previous task state
 		this.clearTask()
 
-		this.outputChannel.appendLine("Webview view resolved")
+		this.outputChannel.appendLine("Webview 视图已就绪")
 	}
 
 	async initClineWithTask(task?: string, images?: string[]) {

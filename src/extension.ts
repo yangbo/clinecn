@@ -80,7 +80,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 		tabProvider.resolveWebviewView(panel)
 
-		// 锁定编辑器组，这样点击文件时不会覆盖面板
+		// 锁定编辑器组，这样点击文件时不会覆盖面板，同时也不会将编辑器加入到本组
 		await delay(100)
 		await vscode.commands.executeCommand("workbench.action.lockEditorGroup")
 	}

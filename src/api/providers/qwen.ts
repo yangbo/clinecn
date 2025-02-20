@@ -11,8 +11,13 @@ export class QwenHandler implements ApiHandler {
 
 	constructor(options: ApiHandlerOptions) {
 		this.options = options
+		// 支持中国线路
+		var apiURL = "https://dashscope.aliyuncs.com/compatible-mode/v1"
+		if (this.options.qwenApiLine && this.options.qwenApiLine === 'international') {
+			var apiURL = "https://dashscope-intl.aliyuncs.com/compatible-mode/v1"
+		}
 		this.client = new OpenAI({
-			baseURL: this.options.qwenApiLine || "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
+			baseURL: apiURL,
 			apiKey: this.options.qwenApiKey,
 		})
 	}

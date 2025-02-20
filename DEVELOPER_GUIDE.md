@@ -8,7 +8,11 @@
 
 执行脚本 `npm run compile` 编译本扩展。
 
-## Debug 本扩展
+执行脚本 `npm run build:webview` 生成 webview 内容。
+
+到这里就可以 debug 扩展了。
+
+## Debug 扩展
 
 要debug本扩展，需要创建 .vscode/launch.json 文件，内容如下：
 
@@ -50,3 +54,19 @@
 ## 打包
 
 执行脚本 `npm run package` 打包本扩展。
+
+
+## 调试 webview 内容的方法
+
+目前只能 F5 调试插件，然后在其中查看 webview 的内容。
+
+当前在根目录下执行 `npm run start:webview`，启动 react app依然会失败，报告：
+
+```
+ERROR in ./src/utils/validate.ts 3:0-67
+Module not found: Error: You attempted to import ../../../src/shared/api which falls outside of the project src/ directory. Relative imports outside of src/ are not supported.
+You can either move it inside src/, or add a symlink to it from project's node_modules/.
+```
+
+还没有找到解决方法。
+
