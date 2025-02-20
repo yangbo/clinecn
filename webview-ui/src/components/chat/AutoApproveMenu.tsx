@@ -31,7 +31,7 @@ const ACTION_METADATA: {
 	{
 		id: "executeCommands",
 		label: "执行安全命令",
-		shortName: "命令",
+		shortName: "执行命令",
 		description: "允许执行安全的终端命令。如果模型判断某个命令可能具有破坏性，仍会要求获得批准。",
 	},
 	{

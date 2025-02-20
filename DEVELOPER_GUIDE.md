@@ -58,15 +58,6 @@
 
 ## 调试 webview 内容的方法
 
-目前只能 F5 调试插件，然后在其中查看 webview 的内容。
+在终端中执行脚本 `npm run watch` 会自动构建 webview-ui/ 目录，并且监视其中的 *.tsx 文件，一旦有修改会触发自动编译命令，这样就可以在 vscode 中生效了，但需要在 vscode 扩展调试窗口中按 Control+R 刷新一下。
 
-当前在根目录下执行 `npm run start:webview`，启动 react app依然会失败，报告：
-
-```
-ERROR in ./src/utils/validate.ts 3:0-67
-Module not found: Error: You attempted to import ../../../src/shared/api which falls outside of the project src/ directory. Relative imports outside of src/ are not supported.
-You can either move it inside src/, or add a symlink to it from project's node_modules/.
-```
-
-还没有找到解决方法。
-
+还需要进一步研究如何更方便地热重载 *.tsx 文件而不重新编译。
