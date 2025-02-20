@@ -4,6 +4,7 @@ import { ApiHandler } from "../"
 import { ApiHandlerOptions, QwenModelId, ModelInfo, qwenDefaultModelId, qwenModels } from "../../shared/api"
 import { convertToOpenAiMessages } from "../transform/openai-format"
 import { ApiStream } from "../transform/stream"
+import { Logger } from "../../services/logging/Logger"
 
 export class QwenHandler implements ApiHandler {
 	private options: ApiHandlerOptions
@@ -16,6 +17,8 @@ export class QwenHandler implements ApiHandler {
 		if (this.options.qwenApiLine && this.options.qwenApiLine === 'international') {
 			var apiURL = "https://dashscope-intl.aliyuncs.com/compatible-mode/v1"
 		}
+		Logger.log(`线路类型：${this.options.qwenApiLine}；线路URL：${apiURL}`);
+
 		this.client = new OpenAI({
 			baseURL: apiURL,
 			apiKey: this.options.qwenApiKey,
