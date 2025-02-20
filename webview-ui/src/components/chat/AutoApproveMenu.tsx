@@ -1,4 +1,4 @@
-import { VSCodeCheckbox, VSCodeTextField } from "@vscode/webview-ui-toolkit/react"
+import { VSCodeButton, VSCodeCheckbox, VSCodeTextField } from "@vscode/webview-ui-toolkit/react"
 import { useCallback, useState } from "react"
 import styled from "styled-components"
 import { useExtensionState } from "../../context/ExtensionStateContext"
@@ -16,37 +16,37 @@ const ACTION_METADATA: {
 	shortName: string
 	description: string
 }[] = [
-	{
-		id: "readFiles",
-		label: "读取文件和目录",
-		shortName: "读取",
-		description: "允许访问并读取您计算机上的任何文件。",
-	},
-	{
-		id: "editFiles",
-		label: "编辑文件",
-		shortName: "编辑",
-		description: "允许修改您计算机上的任何文件。",
-	},
-	{
-		id: "executeCommands",
-		label: "执行安全命令",
-		shortName: "执行命令",
-		description: "允许执行安全的终端命令。如果模型判断某个命令可能具有破坏性，仍会要求获得批准。",
-	},
-	{
-		id: "useBrowser",
-		label: "使用浏览器",
-		shortName: "浏览器",
-		description: "允许在无头浏览器中启动并与任何网站交互。",
-	},
-	{
-		id: "useMcp",
-		label: "使用 MCP 服务器",
-		shortName: "MCP",
-		description: "允许使用已配置的 MCP 服务器，这些服务器可能会修改文件系统或与 API 交互。",
-	},
-]
+		{
+			id: "readFiles",
+			label: "读取文件和目录",
+			shortName: "读取",
+			description: "允许访问并读取您计算机上的任何文件。",
+		},
+		{
+			id: "editFiles",
+			label: "编辑文件",
+			shortName: "编辑",
+			description: "允许修改您计算机上的任何文件。",
+		},
+		{
+			id: "executeCommands",
+			label: "执行安全命令",
+			shortName: "执行命令",
+			description: "允许执行安全的终端命令。如果模型判断某个命令可能具有破坏性，仍会要求获得批准。",
+		},
+		{
+			id: "useBrowser",
+			label: "使用浏览器",
+			shortName: "浏览器",
+			description: "允许在无头浏览器中启动并与任何网站交互。",
+		},
+		{
+			id: "useMcp",
+			label: "使用 MCP 服务器",
+			shortName: "MCP",
+			description: "允许使用已配置的 MCP 服务器，这些服务器可能会修改文件系统或与 API 交互。",
+		},
+	]
 
 const AutoApproveMenu = ({ style }: AutoApproveMenuProps) => {
 	const { autoApprovalSettings } = useExtensionState()
@@ -218,7 +218,7 @@ const AutoApproveMenu = ({ style }: AutoApproveMenuProps) => {
 							color: getAsVar(VSC_DESCRIPTION_FOREGROUND),
 							fontSize: "12px",
 						}}>
-						自动批准允许 Cline 在不需要请求许可的情况下执行以下操作。请谨慎使用，并确保您了解相关风险。
+						自动批准允许 ClineCN 在不需要许可的情况下执行以下操作。请谨慎使用，并确保您了解相关风险。
 					</div>
 					{ACTION_METADATA.map((action) => (
 						<div key={action.id} style={{ margin: "6px 0" }}>
@@ -285,7 +285,7 @@ const AutoApproveMenu = ({ style }: AutoApproveMenuProps) => {
 							fontSize: "12px",
 							marginBottom: "10px",
 						}}>
-						Cline 将自动发出这么多次 API 请求，然后才会请求批准以继续任务。
+						允许 ClineCN 自动发出这么多次 API 请求，然后再请求批准以继续。
 					</div>
 					<div style={{ margin: "6px 0" }}>
 						<VSCodeCheckbox
@@ -302,8 +302,11 @@ const AutoApproveMenu = ({ style }: AutoApproveMenuProps) => {
 								color: getAsVar(VSC_DESCRIPTION_FOREGROUND),
 								fontSize: "12px",
 							}}>
-							当 Cline 需要批准以继续操作或任务完成时接收系统通知。
+							当 ClineCN 需要批准以继续操作或任务完成时接收系统通知。
 						</div>
+					</div>
+					<div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '10px' }}>
+						<VSCodeButton onClick={() => setIsExpanded(prev => !prev)}>关闭</VSCodeButton>
 					</div>
 				</div>
 			)}
