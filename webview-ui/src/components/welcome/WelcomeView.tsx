@@ -60,17 +60,25 @@ const WelcomeView = () => {
 				<p>
 					感谢{" "}
 					<VSCodeLink
+						href="https://www.deepseek.com/"
+						style={{ display: "inline" }}>
+						DeepSeek
+					</VSCodeLink>{" "}为我们带来了改变世界的一个开源大语言模型，让AI编程可以惠及每一个中国人。
+				</p>
+				<p>
+					感谢{" "}
+					<VSCodeLink
 						href="https://www-cdn.anthropic.com/fed9cc193a14b84131812372d8d5857f8f304c52/Model_Card_Claude_3_Addendum.pdf"
 						style={{ display: "inline" }}>
 						Claude 3.5 Sonnet 的代理编码能力
 					</VSCodeLink>{" "}
-					和各种工具的支持，我可以创建和编辑文件、探索复杂项目、使用浏览器，以及执行终端命令（当然，需要你的许可）。我甚至可以使用
-					MCP 创建新工具来扩展自己的能力。
+					和各种工具的支持，让我可以创建和编辑文件、探索复杂项目、使用浏览器，以及执行终端命令（当然，需要你的许可）。
+					我甚至可以使用“模型上下文协议（MCP）”来创建新工具，扩展能力。
 				</p>
 
-				<b>要开始使用，此扩展需要一个 Claude 3.5 Sonnet 的 API 提供者。</b>
+				<b>要开始使用，此扩展需要一个 DeepSeek-R1 级别的大语言模型 API 提供者。</b>
 
-				<div
+				{/* <div
 					style={{
 						marginTop: "15px",
 						padding: isSubscribed ? "5px 15px 5px 15px" : "12px",
@@ -86,8 +94,8 @@ const WelcomeView = () => {
 					) : (
 						<>
 							<p style={{ margin: 0, marginBottom: "8px" }}>
-								虽然 Cline 目前需要你提供自己的 API
-								密钥，但我们正在开发一个具有额外功能的官方账户系统。订阅我们的邮件列表以获取更新！
+								虽然 ClineCN 目前需要你提供自己的 API 密钥，
+								但我们正在开发一个具有额外功能的官方账户系统。订阅我们的邮件列表以获取更新！
 							</p>
 							<div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
 								<VSCodeTextField
@@ -103,7 +111,7 @@ const WelcomeView = () => {
 							</div>
 						</>
 					)}
-				</div>
+				</div> */}
 
 				<div style={{ marginTop: "15px" }}>
 					<ApiOptions showModelOptions={false} />

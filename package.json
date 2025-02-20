@@ -1,8 +1,8 @@
 {
 	"name": "clinecn",
 	"displayName": "ClineCN",
-	"description": "Cline中文版，ClineCN 是一个AI编程助手，当您确认后，它可以执行创建/编辑文件、运行命令、使用浏览器等功能。ClineCN 基于 Cline 开发，是 Cline 的中文版，也会加入我们的独创功能。",
-	"version": "3.3.2",
+	"description": "中文版Cline，ClineCN 是一个AI编程助手，当您确认后，它可以执行创建/编辑文件、运行命令、使用浏览器等功能。ClineCN 基于 Cline 开发，是针对中文优化后的 Cline，在学习 Cline 的同时，也会加入我们创新的功能。",
+	"version": "3.3.3",
 	"icon": "assets/icons/icon.png",
 	"galleryBanner": {
 		"color": "#617A91",
@@ -57,7 +57,7 @@
 			"activitybar": [
 				{
 					"id": "clinecn-ActivityBar",
-					"title": "中文版Cline",
+					"title": "ClineCN",
 					"icon": "assets/icons/icon.svg"
 				}
 			]
@@ -133,14 +133,14 @@
 			]
 		},
 		"configuration": {
-			"title": "Cline CN - Cline中文版",
+			"title": "ClineCN - 中文版Cline",
 			"properties": {
 				"clinecn.vsCodeLmModelSelector": {
 					"type": "object",
 					"properties": {
 						"vendor": {
 							"type": "string",
-							"description": "大语言模型的供应商（例如 DeepSeek）"
+							"description": "大语言模型的供应商（例如 Alibaba）"
 						},
 						"family": {
 							"type": "string",
@@ -236,8 +236,7 @@
 		"npm-run-all": "^4.1.5",
 		"prettier": "^3.3.3",
 		"should": "^13.2.3",
-		"typescript": "^5.4.5",
-		"@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+		"typescript": "^5.4.5"
 	},
 	"dependencies": {
 		"@anthropic-ai/bedrock-sdk": "^0.10.2",

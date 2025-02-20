@@ -1,5 +1,14 @@
 # Changelog
 
+## [3.3.3]
+
+- 将 Cline 中的 command、menu、view 等组件的id都从 'cline' 改为了 'clinecn'，避免同时安装 clinecn 和 cline 扩展时的冲突问题。
+
+- 支持阿里千问大语言模型的中国和国际线路。国内用户现在可以使用‘中国’线路了。
+
+- 将 vscode workspace 的 section 从 'cline' 改为 'clinecn'，避免和 cline 扩展冲突。
+
+- 将扩展的 output 面板名改为 'ClineCN'，并将常见的输出日志改为中文。
 
 ## [3.3.2]
     合入cline 3.30-3.3.2版本修改，并进行汉化。
