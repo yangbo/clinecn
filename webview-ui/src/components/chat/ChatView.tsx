@@ -775,7 +775,7 @@ const ChatView = ({ isHidden, showAnnouncement, hideAnnouncement, showHistoryVie
 								style={{ display: "inline" }}>
 								Claude 3.5 Sonnet 的代理编码能力
 							</VSCodeLink>{" "}
-							，我可以一步步处理复杂的软件开发任务。通过创建和编辑文件、探索复杂项目、使用浏览器和执行终端命令（在你授予权限后）等工具，我可以提供超越代码补全或技术支持的帮助。我甚至可以使用
+							，我可以一步步处理复杂的软件开发任务。通过创建和编辑文件、探索复杂项目、使用浏览器和执行终端命令（授权后）等工具，我可以提供超越代码补全或技术支持的帮助。我甚至可以使用
 							“模型上下文协议（MCP）”来创建新工具，扩展能力。
 						</p>
 					</div>
