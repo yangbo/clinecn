@@ -1,4 +1,5 @@
 import {
+	VSCodeButton,
 	VSCodeCheckbox,
 	VSCodeDropdown,
 	VSCodeLink,
@@ -132,10 +133,13 @@ const ApiOptions = ({ showModelOptions, apiErrorMessage, modelIdErrorMessage, is
 	useEvent("message", handleMessage)
 
 	/*
-	VSCodeDropdown 有一个开放的错误，其中动态渲染的选项不会自动选择提供的 value 属性。您可以通过比较它与普通的 select/option 元素来看到这一点，后者按预期工作。
+	VSCodeDropdown 有一个开放的错误，其中动态渲染的选项不会自动选择提供的 value 属性。
+	您可以通过比较它与普通的 select/option 元素来看到这一点，后者按预期工作。
 	https://github.com/microsoft/vscode-webview-ui-toolkit/issues/433
 
-	在我们的例子中，当用户在提供者之间切换时，我们根据提供者、该提供者的默认模型和用户可能选择的模型重新计算 selectedModelId。不幸的是，VSCodeDropdown 组件不会选择这个计算值，而是默认选择第一个“选择一个模型...”选项，这使得它看起来像是模型在切换提供者时被清除了，但实际上并非如此。
+	在我们的例子中，当用户在提供者之间切换时，我们根据提供者、该提供者的默认模型和用户可能选择的模型重新计算 selectedModelId。
+	不幸的是，VSCodeDropdown 组件不会选择这个计算值，而是默认选择第一个“选择一个模型...”选项，
+	这使得它看起来像是模型在切换提供者时被清除了，但实际上并非如此。
 
 	作为解决方法，我们为每个提供者创建单独的 dropdown 实例，然后根据当前提供者有条件地渲染它们。
 	*/
@@ -1052,7 +1056,7 @@ export function getOpenRouterAuthUrl(uriScheme?: string) {
 export const formatPrice = (price: number) => {
 	return new Intl.NumberFormat("en-US", {
 		style: "currency",
-		currency: "USD",
+		currency: "RMB",
 		minimumFractionDigits: 2,
 		maximumFractionDigits: 2,
 	}).format(price)
