@@ -129,7 +129,7 @@ const TaskHeader: React.FC<TaskHeaderProps> = ({
 						}}>
 						<span style={{ fontWeight: "bold" }}>
 							{/* {windowWidth > 280 && windowWidth < 310 ? "Context:" : "Context Window:"} */}
-							Context Window:
+							上下文窗口:
 						</span>
 					</div>
 					<div

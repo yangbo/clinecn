@@ -256,7 +256,7 @@ export const ChatRowContent = ({ message, isExpanded, onToggleExpand, lastModifi
 									color: normalColor,
 									fontWeight: "bold",
 								}}>
-								API Request Cancelled
+								API 请求已取消
 							</span>
 						) : (
 							<span
@@ -268,11 +268,11 @@ export const ChatRowContent = ({ message, isExpanded, onToggleExpand, lastModifi
 							</span>
 						)
 					) : cost != null ? (
-						<span style={{ color: normalColor, fontWeight: "bold" }}>API Request</span>
+						<span style={{ color: normalColor, fontWeight: "bold" }}>API 请求</span>
 					) : apiRequestFailedMessage ? (
-						<span style={{ color: errorColor, fontWeight: "bold" }}>API Request Failed</span>
+						<span style={{ color: errorColor, fontWeight: "bold" }}>API 请求已失败</span>
 					) : (
-						<span style={{ color: normalColor, fontWeight: "bold" }}>API Request...</span>
+						<span style={{ color: normalColor, fontWeight: "bold" }}>API 请求中...</span>
 					),
 				]
 			case "followup":
@@ -283,7 +283,7 @@ export const ChatRowContent = ({ message, isExpanded, onToggleExpand, lastModifi
 							color: normalColor,
 							marginBottom: "-1.5px",
 						}}></span>,
-					<span style={{ color: normalColor, fontWeight: "bold" }}>Cline has a question:</span>,
+					<span style={{ color: normalColor, fontWeight: "bold" }}>ClineCN 询问:</span>,
 				]
 			default:
 				return [null, null]
