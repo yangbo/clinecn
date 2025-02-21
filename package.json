@@ -18,9 +18,9 @@
 	"publisher": "yangbo",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/yangbo/clinecn"
+		"url": "https://gitee.com/terawin/clinecn"
 	},
-	"homepage": "https://github.com/yangbo/clinecn",
+	"homepage": "https://gitee.com/terawin/clinecn",
 	"categories": [
 		"AI",
 		"Chat",
