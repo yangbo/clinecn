@@ -29,8 +29,8 @@
     <linearGradient id="a-10" x1="371.65" x2="381.72" y1="545.58" y2="514.35" gradientUnits="userSpaceOnUse" href="#a"/>
     <bx:export>
       <bx:file format="png" path="icon.png" width="128" height="128"/>
-      <bx:file format="png" path="robot_panel_dark.png" background="#fff" width="29" height="30"/>
-      <bx:file format="png" path="robot_panel_light.png" width="29" height="30"/>
+      <bx:file format="png" path="robot_panel_dark.png" background="#fff0" width="29" height="30" excluded="true"/>
+      <bx:file format="png" path="robot_panel_light.png" width="29" height="30" excluded="true"/>
     </bx:export>
     <linearGradient id="a-11" x1="414.41" x2="381.62" y1="514.19" y2="514.68" gradientUnits="userSpaceOnUse" href="#a"/>
     <linearGradient id="a-12" x1="414.41" x2="447.06" y1="514.19" y2="514.04" gradientUnits="userSpaceOnUse" href="#a"/>

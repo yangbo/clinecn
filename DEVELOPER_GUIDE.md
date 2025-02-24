@@ -53,7 +53,7 @@
 
 ## 打包
 
-执行脚本 `npm run package` 打包本扩展。
+执行脚本 `vsce package` 打包本扩展。
 
 
 ## 调试 webview 内容的方法
@@ -61,3 +61,7 @@
 在终端中执行脚本 `npm run watch` 会自动构建 webview-ui/ 目录，并且监视其中的 *.tsx 文件，一旦有修改会触发自动编译命令，这样就可以在 vscode 中生效了，但需要在 vscode 扩展调试窗口中按 Control+R 刷新一下。
 
 还需要进一步研究如何更方便地热重载 *.tsx 文件而不重新编译。
+
+## 编辑图标
+
+使用 [boxy svg](https://boxy-svg.com/) 软件编辑图标。
