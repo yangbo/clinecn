@@ -1053,10 +1053,16 @@ export function getOpenRouterAuthUrl(uriScheme?: string) {
 	return `https://openrouter.ai/auth?callback_url=${uriScheme || "vscode"}://cline/openrouter`
 }
 
-export const formatPrice = (price: number) => {
+/**
+ * 格式化价格
+ * @param price 价格
+ * @param currency 货币单位
+ * @returns 格式化后的价格
+ */
+export const formatPrice = (price: number, currency?: string) => {
 	return new Intl.NumberFormat("en-US", {
 		style: "currency",
-		currency: "RMB",
+		currency: currency || "USD",
 		minimumFractionDigits: 2,
 		maximumFractionDigits: 2,
 	}).format(price)
@@ -1076,6 +1082,7 @@ export const ModelInfoView = ({
 	isPopup?: boolean
 }) => {
 	const isGemini = Object.keys(geminiModels).includes(selectedModelId)
+	const isQwenDeepSeek = Object.keys(qwenModels).includes(selectedModelId) && selectedModelId.indexOf("deepseek")
 
 	const infoItems = [
 		modelInfo.description && (
@@ -1119,18 +1126,18 @@ export const ModelInfoView = ({
 		),
 		modelInfo.supportsPromptCache && modelInfo.cacheWritesPrice && (
 			<span key="cacheWritesPrice">
-				<span style={{ fontWeight: 500 }}>缓存写入价格：</span> {formatPrice(modelInfo.cacheWritesPrice || 0)}
+				<span style={{ fontWeight: 500 }}>缓存写入价格：</span> {formatPrice(modelInfo.cacheWritesPrice || 0, modelInfo.currency)}
 				/百万 tokens
 			</span>
 		),
 		modelInfo.supportsPromptCache && modelInfo.cacheReadsPrice && (
 			<span key="cacheReadsPrice">
-				<span style={{ fontWeight: 500 }}>缓存读取价格：</span> {formatPrice(modelInfo.cacheReadsPrice || 0)}/百万 tokens
+				<span style={{ fontWeight: 500 }}>缓存读取价格：</span> {formatPrice(modelInfo.cacheReadsPrice || 0, modelInfo.currency)}/百万 tokens
 			</span>
 		),
 		modelInfo.outputPrice !== undefined && modelInfo.outputPrice > 0 && (
 			<span key="outputPrice">
-				<span style={{ fontWeight: 500 }}>输出价格：</span> {formatPrice(modelInfo.outputPrice)}/百万 tokens
+				<span style={{ fontWeight: 500 }}>输出价格：</span> {formatPrice(modelInfo.outputPrice, modelInfo.currency)}/百万 tokens
 			</span>
 		),
 		isGemini && (
@@ -1138,6 +1145,14 @@ export const ModelInfoView = ({
 				* 每分钟免费{selectedModelId && selectedModelId.includes("flash") ? "15" : "2"}次请求。超出后，
 				费用取决于提示大小。{" "}
 				<VSCodeLink href="https://ai.google.dev/pricing" style={{ display: "inline", fontSize: "inherit" }}>
+					更多信息请参见定价详情。
+				</VSCodeLink>
+			</span>
+		),
+		isQwenDeepSeek && (
+			<span key="qwenInfo" style={{ fontStyle: "italic" }}>
+				* 百炼开通后180天内有100万免费Token优惠。超出后，费用取决于提示大小。{" "}
+				<VSCodeLink href="https://help.aliyun.com/zh/model-studio/getting-started/models?#935bd5ba5cg5d" style={{ display: "inline", fontSize: "inherit" }}>
 					更多信息请参见定价详情。
 				</VSCodeLink>
 			</span>

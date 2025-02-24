@@ -12,10 +12,10 @@
 		"vscode": "^1.84.0"
 	},
 	"author": {
-		"name": "yangbo"
+		"name": "TeraWinCN"
 	},
 	"license": "Apache-2.0",
-	"publisher": "yangbo",
+	"publisher": "TeraWinCN",
 	"repository": {
 		"type": "git",
 		"url": "https://gitee.com/terawin/clinecn"

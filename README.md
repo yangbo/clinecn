@@ -1,17 +1,17 @@
 # ClineCN (中文Cline) 🌏
 
-[![Version](https://img.shields.io/visual-studio-marketplace/v/HybridTalentComputing.cline-chinese)](https://marketplace.visualstudio.com/items?itemName=HybridTalentComputing.cline-chinese)
-[![Downloads](https://img.shields.io/visual-studio-marketplace/d/HybridTalentComputing.cline-chinese)](https://marketplace.visualstudio.com/items?itemName=HybridTalentComputing.cline-chinese)
-[![Rating](https://img.shields.io/visual-studio-marketplace/r/HybridTalentComputing.cline-chinese)](https://marketplace.visualstudio.com/items?itemName=HybridTalentComputing.cline-chinese)
+[![Version](https://img.shields.io/visual-studio-marketplace/v/TeraWinCN.clinecn)](https://marketplace.visualstudio.com/items?itemName=TeraWinCN.clinecn)
+[![Downloads](https://img.shields.io/visual-studio-marketplace/d/TeraWinCN.clinecn)](https://marketplace.visualstudio.com/items?itemName=TeraWinCN.clinecn)
+[![Rating](https://img.shields.io/visual-studio-marketplace/r/TeraWinCN.clinecn)](https://marketplace.visualstudio.com/items?itemName=TeraWinCN.clinecn)
 ## 项目地址
 https://gitee.com/terawin/clinecn
 欢迎大家star，fork，提出issue，贡献代码，一起完善这个项目。
 
 ## 简介
 
-这个项目是基于 [Cline](https://github.com/cline/cline) 和 [Cline-Chinese](https://github.com/HybridTalentComputing/cline-chinese)的优化版本。旨在解决 Cline 对中文支持不够好、不能针对中国用户的需求开发等问题。
+这个项目基于 [Cline](https://github.com/cline/cline) 和 [Cline-Chinese](https://github.com/HybridTalentComputing/cline-chinese) 开发，是它们的优化版本。旨在解决 Cline 对中文支持不够好、没有精力针对中国用户的需求进行开发、没有对 DeepSeek 系列模型进行优化等问题。
 
-我们将通过优化英文 prompt 为中文、优先提供中国AI模型厂商API、提供更符合中文用户习惯的UI界面和功能来更好地服务中国用户。
+我们将通过优化和 DeepSeek 系列大模型的交互，为中国用户提供更符合中国环境和中文习惯的"AI编程"体验，包括UI界面的优化、功能的优化，更好地服务中国用户。
 
 目前已测试[DeepSeek-R1/DeepSeek-V3](https://github.com/deepseek-ai/DeepSeek-R1)工作良好。
 

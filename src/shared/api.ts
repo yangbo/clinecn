@@ -63,16 +63,32 @@ export type ApiConfiguration = ApiHandlerOptions & {
 // Models
 
 export interface ModelInfo {
+	// 最大输入token数
 	maxTokens?: number
+	// 上下文长度
+	// 上下文长度通常称为“上下文窗口”，指的是模型在一次处理过程中能够涉及的最大 token 数，包括输入和输出tokens。
+	// Token 是模型对文本的分解单位，通常一个 token 大致相当于一个单词的一部分。
+	// 上下文长度包括用户输入的所有 token 以及模型生成的所有 token。
+	// 例如，如果一个模型的上下文长度是 2048 token，你输入了 1500 个 token 的文本，那么模型生成的响应最多只能有 548 个 token.
 	contextWindow?: number
+	// 是否支持图片
 	supportsImages?: boolean
+	// 是否支持使用电脑
 	supportsComputerUse?: boolean
+	// 是否支持提示词缓存
 	supportsPromptCache: boolean // this value is hardcoded for now
+	// 输入 token 的价格，按百万 token 计算的价格，如果不是请换算为百万token的费用
 	inputPrice?: number
+	// 输出 token 的价格，按百万 token 计算的价格
 	outputPrice?: number
+	// 缓存写入价格
 	cacheWritesPrice?: number
+	// 缓存读取价格
 	cacheReadsPrice?: number
-	description?: string
+	// 描述
+	description?: string,
+	// 货币,可以是 "USD", "CNY" 等，默认是 "USD"
+	currency?: string
 }
 
 // Anthropic
@@ -427,25 +443,27 @@ export const deepSeekModels = {
 		contextWindow: 64_000,
 		supportsImages: false,
 		supportsPromptCache: true, // supports context caching, but not in the way anthropic does it (deepseek reports input tokens and reads/writes in the same usage report) FIXME: we need to show users cache stats how deepseek does it
-		inputPrice: 0, // technically there is no input price, it's all either a cache hit or miss (ApiOptions will not show this)
-		outputPrice: 0.28,
-		cacheWritesPrice: 0.14,
-		cacheReadsPrice: 0.014,
+		inputPrice: 2, // technically there is no input price, it's all either a cache hit or miss (ApiOptions will not show this)
+		outputPrice: 8,
+		cacheWritesPrice: NaN,
+		cacheReadsPrice: NaN,
 	},
 	"deepseek-reasoner": {
 		maxTokens: 8_000,
 		contextWindow: 64_000,
 		supportsImages: false,
 		supportsPromptCache: true, // supports context caching, but not in the way anthropic does it (deepseek reports input tokens and reads/writes in the same usage report) FIXME: we need to show users cache stats how deepseek does it
-		inputPrice: 0, // technically there is no input price, it's all either a cache hit or miss (ApiOptions will not show this)
-		outputPrice: 2.19,
-		cacheWritesPrice: 0.55,
-		cacheReadsPrice: 0.14,
+		inputPrice: 4, // technically there is no input price, it's all either a cache hit or miss (ApiOptions will not show this)
+		outputPrice: 16,
+		currency: "CNY",
+		cacheWritesPrice: NaN,
+		cacheReadsPrice: NaN,
 	},
 } as const satisfies Record<string, ModelInfo>
 
 // Qwen
 // https://bailian.console.aliyun.com/
+// 价格表：https://help.aliyun.com/zh/model-studio/getting-started/models
 export type QwenModelId = keyof typeof qwenModels
 export const qwenDefaultModelId: QwenModelId = "qwen-coder-plus-latest"
 export const qwenModels = {
@@ -454,100 +472,110 @@ export const qwenModels = {
 		contextWindow: 131_072,
 		supportsImages: false,
 		supportsPromptCache: false,
-		inputPrice: 0.0035,
-		outputPrice: 0.007,
-		cacheWritesPrice: 0.0035,
-		cacheReadsPrice: 0.007,
+		inputPrice: 0.0035 * 1000,	// 换算为百万token的费用，文档中是每千token的价格，outputPrice 也一样
+		outputPrice: 0.007 * 1000,
+		cacheWritesPrice: NaN,
+		cacheReadsPrice: NaN,
+		currency: "CNY"
 	},
 	"qwen-plus-latest": {
 		maxTokens: 129_024,
 		contextWindow: 131_072,
 		supportsImages: false,
 		supportsPromptCache: false,
-		inputPrice: 0.0008,
-		outputPrice: 0.002,
-		cacheWritesPrice: 0.0004,
-		cacheReadsPrice: 0.001,
+		inputPrice: 0.0008 * 1000,
+		outputPrice: 0.002 * 1000,
+		cacheWritesPrice: NaN,
+		cacheReadsPrice: NaN,
+		currency: "CNY"
 	},
 	"qwen-turbo-latest": {
 		maxTokens: 1_000_000,
 		contextWindow: 1_000_000,
 		supportsImages: false,
 		supportsPromptCache: false,
-		inputPrice: 0.0003,
-		outputPrice: 0.0006,
-		cacheWritesPrice: 0.00015,
-		cacheReadsPrice: 0.0003,
+		inputPrice: 0.0003 * 1000,
+		outputPrice: 0.0006 * 1000,
+		cacheWritesPrice: NaN,
+		cacheReadsPrice: NaN,
+		currency: "CNY"
 	},
 	"qwen-max-latest": {
 		maxTokens: 30_720,
 		contextWindow: 32_768,
 		supportsImages: false,
 		supportsPromptCache: false,
-		inputPrice: 0.0112,
-		outputPrice: 0.0448,
-		cacheWritesPrice: 0.0056,
-		cacheReadsPrice: 0.0224,
+		inputPrice: 0.0112 * 1000,
+		outputPrice: 0.0448 * 1000,
+		cacheWritesPrice: NaN,
+		cacheReadsPrice: NaN,
+		currency: "CNY"
 	},
 	"qwen-coder-plus": {
 		maxTokens: 129_024,
 		contextWindow: 131_072,
 		supportsImages: false,
 		supportsPromptCache: false,
-		inputPrice: 0.0035,
-		outputPrice: 0.007,
-		cacheWritesPrice: 0.0035,
-		cacheReadsPrice: 0.007,
+		inputPrice: 0.0035 * 1000,
+		outputPrice: 0.007 * 1000,
+		cacheWritesPrice: NaN,
+		cacheReadsPrice: NaN,
+		currency: "CNY"
 	},
 	"qwen-plus": {
 		maxTokens: 129_024,
 		contextWindow: 131_072,
 		supportsImages: false,
 		supportsPromptCache: false,
-		inputPrice: 0.0008,
-		outputPrice: 0.002,
-		cacheWritesPrice: 0.0004,
-		cacheReadsPrice: 0.001,
+		inputPrice: 0.0008 * 1000,
+		outputPrice: 0.002 * 1000,
+		cacheWritesPrice: NaN,
+		cacheReadsPrice: NaN,
+		currency: "CNY"
 	},
 	"qwen-turbo": {
 		maxTokens: 1_000_000,
 		contextWindow: 1_000_000,
 		supportsImages: false,
 		supportsPromptCache: false,
-		inputPrice: 0.0003,
-		outputPrice: 0.0006,
-		cacheWritesPrice: 0.00015,
-		cacheReadsPrice: 0.0003,
+		inputPrice: 0.0003 * 1000,
+		outputPrice: 0.0006 * 1000,
+		cacheWritesPrice: NaN,
+		cacheReadsPrice: NaN,
+		currency: "CNY"
 	},
 	"qwen-max": {
 		maxTokens: 30_720,
 		contextWindow: 32_768,
 		supportsImages: false,
 		supportsPromptCache: false,
-		inputPrice: 0.0112,
-		outputPrice: 0.0448,
-		cacheWritesPrice: 0.0056,
-		cacheReadsPrice: 0.0224,
+		inputPrice: 0.0112 * 1000,
+		outputPrice: 0.0448 * 1000,
+		cacheWritesPrice: NaN,
+		cacheReadsPrice: NaN,
+		currency: "CNY"
 	},
 	"deepseek-v3": {
 		maxTokens: 8_000,
 		contextWindow: 64_000,
 		supportsImages: false,
 		supportsPromptCache: true,
-		inputPrice: 0,
-		outputPrice: 0.28,
-		cacheWritesPrice: 0.14,
-		cacheReadsPrice: 0.014,
+		inputPrice: 0.002 * 1000,
+		outputPrice: 0.008 * 1000,
+		cacheWritesPrice: NaN,
+		cacheReadsPrice: NaN,
+		currency: "CNY"
 	},
 	"deepseek-r1": {
 		maxTokens: 8_000,
-		contextWindow: 64_000,
+		contextWindow: 65_792,
 		supportsImages: false,
 		supportsPromptCache: true,
-		inputPrice: 0,
-		outputPrice: 2.19,
-		cacheWritesPrice: 0.55,
-		cacheReadsPrice: 0.14,
+		inputPrice: 0.004 * 1000,
+		outputPrice: 0.016 * 1000,
+		cacheWritesPrice: NaN,
+		cacheReadsPrice: NaN,
+		currency: "CNY"
 	},
 } as const satisfies Record<string, ModelInfo>
 
