@@ -1013,13 +1013,13 @@ const ApiOptions = ({ showModelOptions, apiErrorMessage, modelIdErrorMessage, is
 							<label htmlFor="model-id">
 								<span style={{ fontWeight: 500 }}>模型</span>
 							</label>
+							{selectedProvider === "qwen" && createDropdown(qwenModels)}
+							{selectedProvider === "deepseek" && createDropdown(deepSeekModels)}
 							{selectedProvider === "anthropic" && createDropdown(anthropicModels)}
 							{selectedProvider === "bedrock" && createDropdown(bedrockModels)}
 							{selectedProvider === "vertex" && createDropdown(vertexModels)}
 							{selectedProvider === "gemini" && createDropdown(geminiModels)}
 							{selectedProvider === "openai-native" && createDropdown(openAiNativeModels)}
-							{selectedProvider === "deepseek" && createDropdown(deepSeekModels)}
-							{selectedProvider === "qwen" && createDropdown(qwenModels)}
 							{selectedProvider === "mistral" && createDropdown(mistralModels)}
 						</DropdownContainer>
 
@@ -1060,7 +1060,7 @@ export function getOpenRouterAuthUrl(uriScheme?: string) {
  * @returns 格式化后的价格
  */
 export const formatPrice = (price: number, currency?: string) => {
-	return new Intl.NumberFormat("en-US", {
+	return new Intl.NumberFormat("zh-CN", {
 		style: "currency",
 		currency: currency || "USD",
 		minimumFractionDigits: 2,
@@ -1082,7 +1082,10 @@ export const ModelInfoView = ({
 	isPopup?: boolean
 }) => {
 	const isGemini = Object.keys(geminiModels).includes(selectedModelId)
-	const isQwenDeepSeek = Object.keys(qwenModels).includes(selectedModelId) && selectedModelId.indexOf("deepseek")
+	const isQwen = Object.keys(qwenModels).includes(selectedModelId)
+	
+	console.log(`modelInfo: `);
+	console.log(modelInfo);
 
 	const infoItems = [
 		modelInfo.description && (
@@ -1121,7 +1124,7 @@ export const ModelInfoView = ({
 		),
 		modelInfo.inputPrice !== undefined && modelInfo.inputPrice > 0 && (
 			<span key="inputPrice">
-				<span style={{ fontWeight: 500 }}>输入价格：</span> {formatPrice(modelInfo.inputPrice)}/百万 tokens
+				<span style={{ fontWeight: 500 }}>输入价格：</span> {formatPrice(modelInfo.inputPrice, modelInfo.currency)}/百万 tokens
 			</span>
 		),
 		modelInfo.supportsPromptCache && modelInfo.cacheWritesPrice && (
@@ -1149,10 +1152,10 @@ export const ModelInfoView = ({
 				</VSCodeLink>
 			</span>
 		),
-		isQwenDeepSeek && (
+		isQwen && (
 			<span key="qwenInfo" style={{ fontStyle: "italic" }}>
 				* 百炼开通后180天内有100万免费Token优惠。超出后，费用取决于提示大小。{" "}
-				<VSCodeLink href="https://help.aliyun.com/zh/model-studio/getting-started/models?#935bd5ba5cg5d" style={{ display: "inline", fontSize: "inherit" }}>
+				<VSCodeLink href="https://help.aliyun.com/zh/model-studio/getting-started/models" style={{ display: "inline", fontSize: "inherit" }}>
 					更多信息请参见定价详情。
 				</VSCodeLink>
 			</span>

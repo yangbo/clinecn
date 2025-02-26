@@ -467,6 +467,30 @@ export const deepSeekModels = {
 export type QwenModelId = keyof typeof qwenModels
 export const qwenDefaultModelId: QwenModelId = "qwen-coder-plus-latest"
 export const qwenModels = {
+	"deepseek-r1": {
+		maxTokens: 8_000,
+		contextWindow: 65_792,
+		supportsImages: false,
+		supportsPromptCache: true,
+		inputPrice: 0.004 * 1000,
+		outputPrice: 0.016 * 1000,
+		cacheWritesPrice: NaN,
+		cacheReadsPrice: NaN,
+		currency: "CNY",
+		description: "DeepSeek-R1 在后训练阶段大规模使用了强化学习技术，在仅有极少标注数据的情况下，极大提升了模型推理能力，尤其在数学、代码、自然语言推理等任务上；"
+	},
+	"deepseek-v3": {
+		maxTokens: 8_000,
+		contextWindow: 64_000,
+		supportsImages: false,
+		supportsPromptCache: true,
+		inputPrice: 0.002 * 1000,
+		outputPrice: 0.008 * 1000,
+		cacheWritesPrice: NaN,
+		cacheReadsPrice: NaN,
+		currency: "CNY",
+		description: "DeepSeek-V3 为 MoE 模型，671B 参数，激活 37B，在 14.8T token 上进行了预训练，在长文本、代码、数学、百科、中文能力上表现优秀。"
+	},
 	"qwen-coder-plus-latest": {
 		maxTokens: 129_024,
 		contextWindow: 131_072,
@@ -476,7 +500,8 @@ export const qwenModels = {
 		outputPrice: 0.007 * 1000,
 		cacheWritesPrice: NaN,
 		cacheReadsPrice: NaN,
-		currency: "CNY"
+		currency: "CNY",
+		description: "通义千问代码模型，擅长编写代码，闭源版本。"
 	},
 	"qwen-plus-latest": {
 		maxTokens: 129_024,
@@ -551,28 +576,6 @@ export const qwenModels = {
 		supportsPromptCache: false,
 		inputPrice: 0.0112 * 1000,
 		outputPrice: 0.0448 * 1000,
-		cacheWritesPrice: NaN,
-		cacheReadsPrice: NaN,
-		currency: "CNY"
-	},
-	"deepseek-v3": {
-		maxTokens: 8_000,
-		contextWindow: 64_000,
-		supportsImages: false,
-		supportsPromptCache: true,
-		inputPrice: 0.002 * 1000,
-		outputPrice: 0.008 * 1000,
-		cacheWritesPrice: NaN,
-		cacheReadsPrice: NaN,
-		currency: "CNY"
-	},
-	"deepseek-r1": {
-		maxTokens: 8_000,
-		contextWindow: 65_792,
-		supportsImages: false,
-		supportsPromptCache: true,
-		inputPrice: 0.004 * 1000,
-		outputPrice: 0.016 * 1000,
 		cacheWritesPrice: NaN,
 		cacheReadsPrice: NaN,
 		currency: "CNY"
