@@ -40,7 +40,7 @@ const HistoryView = ({ onDone }: HistoryViewProps) => {
 	const formatDate = (timestamp: number) => {
 		const date = new Date(timestamp)
 		return date
-			?.toLocaleString("en-US", {
+			?.toLocaleString("zh-CN", {
 				month: "long",
 				day: "numeric",
 				hour: "numeric",
@@ -155,7 +155,7 @@ const HistoryView = ({ onDone }: HistoryViewProps) => {
 						}}>
 						<VSCodeTextField
 							style={{ width: "100%" }}
-							placeholder="Fuzzy search history..."
+							placeholder="模糊搜索历史..."
 							value={searchQuery}
 							onInput={(e) => {
 								const newValue = (e.target as HTMLInputElement)?.value
@@ -176,7 +176,7 @@ const HistoryView = ({ onDone }: HistoryViewProps) => {
 							{searchQuery && (
 								<div
 									className="input-icon-button codicon codicon-close"
-									aria-label="Clear search"
+									aria-label="清除搜索"
 									onClick={() => setSearchQuery("")}
 									slot="end"
 									style={{

@@ -17,7 +17,7 @@ const HistoryPreview = ({ showHistoryView }: HistoryPreviewProps) => {
 	const formatDate = (timestamp: number) => {
 		const date = new Date(timestamp)
 		return date
-			?.toLocaleString("en-US", {
+			?.toLocaleString("zh-CN", {
 				month: "long",
 				day: "numeric",
 				hour: "numeric",

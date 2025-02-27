@@ -42,6 +42,7 @@ import VSCodeButtonLink from "../common/VSCodeButtonLink"
 import OpenRouterModelPicker, { ModelDescriptionMarkdown } from "./OpenRouterModelPicker"
 import styled from "styled-components"
 import * as vscodemodels from "vscode"
+import AddProviderDialog from "./AddProviderDialog";
 
 interface ApiOptionsProps {
 	showModelOptions: boolean
@@ -82,6 +83,7 @@ const ApiOptions = ({ showModelOptions, apiErrorMessage, modelIdErrorMessage, is
 	const [anthropicBaseUrlSelected, setAnthropicBaseUrlSelected] = useState(!!apiConfiguration?.anthropicBaseUrl)
 	const [azureApiVersionSelected, setAzureApiVersionSelected] = useState(!!apiConfiguration?.azureApiVersion)
 	const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false)
+	const [showAddProviderDialog, setShowAddProviderDialog] = useState<boolean>(false)
 
 	const handleInputChange = (field: keyof ApiConfiguration) => (event: any) => {
 		setApiConfiguration({
@@ -173,33 +175,39 @@ const ApiOptions = ({ showModelOptions, apiErrorMessage, modelIdErrorMessage, is
 				<label htmlFor="api-provider">
 					<span style={{ fontWeight: 500 }}>API供应商</span>
 				</label>
-				<VSCodeDropdown
-					id="api-provider"
-					value={selectedProvider}
-					onChange={handleInputChange("apiProvider")}
-					style={{
-						minWidth: 130,
-						position: "relative",
-					}}>
-					<VSCodeOption value="openai">OpenAI 兼容API</VSCodeOption>
-					<VSCodeOption value="qwen">阿里千问</VSCodeOption>
-					<VSCodeOption value="deepseek">DeepSeek</VSCodeOption>
-					<VSCodeOption value="openrouter">OpenRouter</VSCodeOption>
-					<VSCodeOption value="ollama">Ollama</VSCodeOption>
-					<VSCodeOption value="gemini">Google Gemini</VSCodeOption>
-					<VSCodeOption value="anthropic">Anthropic</VSCodeOption>
-					<VSCodeOption value="openai-native">OpenAI</VSCodeOption>
-					<VSCodeOption value="vscode-lm">VS Code LM API</VSCodeOption>
-					<VSCodeOption value="bedrock">AWS Bedrock</VSCodeOption>
-					<VSCodeOption value="vertex">GCP Vertex AI</VSCodeOption>
-					<VSCodeOption value="mistral">Mistral</VSCodeOption>
-					<VSCodeOption value="requesty">Requesty</VSCodeOption>
-					<VSCodeOption value="together">Together</VSCodeOption>
-					<VSCodeOption value="lmstudio">LM Studio</VSCodeOption>
-					<VSCodeOption value="litellm">LiteLLM</VSCodeOption>
-				</VSCodeDropdown>
+				<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+					<VSCodeDropdown
+						id="api-provider"
+						value={selectedProvider}
+						onChange={handleInputChange("apiProvider")}
+						style={{
+							minWidth: 130,
+							position: "relative",
+						}}>
+						<VSCodeOption value="openai">OpenAI 兼容API</VSCodeOption>
+						<VSCodeOption value="qwen">阿里千问</VSCodeOption>
+						<VSCodeOption value="deepseek">DeepSeek</VSCodeOption>
+						<VSCodeOption value="openrouter">OpenRouter</VSCodeOption>
+						<VSCodeOption value="ollama">Ollama</VSCodeOption>
+						<VSCodeOption value="gemini">Google Gemini</VSCodeOption>
+						<VSCodeOption value="anthropic">Anthropic</VSCodeOption>
+						<VSCodeOption value="openai-native">OpenAI</VSCodeOption>
+						<VSCodeOption value="vscode-lm">VS Code LM API</VSCodeOption>
+						<VSCodeOption value="bedrock">AWS Bedrock</VSCodeOption>
+						<VSCodeOption value="vertex">GCP Vertex AI</VSCodeOption>
+						<VSCodeOption value="mistral">Mistral</VSCodeOption>
+						<VSCodeOption value="requesty">Requesty</VSCodeOption>
+						<VSCodeOption value="together">Together</VSCodeOption>
+						<VSCodeOption value="lmstudio">LM Studio</VSCodeOption>
+						<VSCodeOption value="litellm">LiteLLM</VSCodeOption>
+					</VSCodeDropdown>
+					<VSCodeButton
+						appearance="secondary"
+						onClick={() => setShowAddProviderDialog(true)}
+						style={{ marginLeft: '5px' }}
+					>管理供应商</VSCodeButton>
+				</div>
 			</DropdownContainer>
-
 			{selectedProvider === "anthropic" && (
 				<div>
 					<VSCodeTextField
@@ -471,32 +479,32 @@ const ApiOptions = ({ showModelOptions, apiErrorMessage, modelIdErrorMessage, is
 						</VSCodeTextField>
 					) : (
 						<>
-					<VSCodeTextField
-						value={apiConfiguration?.awsAccessKey || ""}
-						style={{ width: "100%" }}
-						type="password"
-						onInput={handleInputChange("awsAccessKey")}
-						placeholder="输入访问密钥...">
-						<span style={{ fontWeight: 500 }}>AWS 访问密钥</span>
-					</VSCodeTextField>
-					<VSCodeTextField
-						value={apiConfiguration?.awsSecretKey || ""}
-						style={{ width: "100%" }}
-						type="password"
-						onInput={handleInputChange("awsSecretKey")}
-						placeholder="输入秘密密钥...">
-						<span style={{ fontWeight: 500 }}>AWS 秘密密钥</span>
-					</VSCodeTextField>
-					<VSCodeTextField
-						value={apiConfiguration?.awsSessionToken || ""}
-						style={{ width: "100%" }}
-						type="password"
-						onInput={handleInputChange("awsSessionToken")}
-						placeholder="输入会话令牌...">
-						<span style={{ fontWeight: 500 }}>AWS 会话令牌</span>
-					</VSCodeTextField>
-				</>
-			)}
+							<VSCodeTextField
+								value={apiConfiguration?.awsAccessKey || ""}
+								style={{ width: "100%" }}
+								type="password"
+								onInput={handleInputChange("awsAccessKey")}
+								placeholder="输入访问密钥...">
+								<span style={{ fontWeight: 500 }}>AWS 访问密钥</span>
+							</VSCodeTextField>
+							<VSCodeTextField
+								value={apiConfiguration?.awsSecretKey || ""}
+								style={{ width: "100%" }}
+								type="password"
+								onInput={handleInputChange("awsSecretKey")}
+								placeholder="输入秘密密钥...">
+								<span style={{ fontWeight: 500 }}>AWS 秘密密钥</span>
+							</VSCodeTextField>
+							<VSCodeTextField
+								value={apiConfiguration?.awsSessionToken || ""}
+								style={{ width: "100%" }}
+								type="password"
+								onInput={handleInputChange("awsSessionToken")}
+								placeholder="输入会话令牌...">
+								<span style={{ fontWeight: 500 }}>AWS 会话令牌</span>
+							</VSCodeTextField>
+						</>
+					)}
 					<DropdownContainer zIndex={DROPDOWN_Z_INDEX - 1} className="dropdown-container">
 						<label htmlFor="aws-region-dropdown">
 							<span style={{ fontWeight: 500 }}>AWS 区域</span>
@@ -767,7 +775,7 @@ const ApiOptions = ({ showModelOptions, apiErrorMessage, modelIdErrorMessage, is
 						}}>
 						<span style={{ color: "var(--vscode-errorForeground)" }}>
 							(<span style={{ fontWeight: 500 }}>注意：</span> ClineCN 使用复杂的提示词，最适合 DeepSeek-R1
-								模型。不太强大的模型可能无法按预期工作。)
+							模型。不太强大的模型可能无法按预期工作。)
 						</span>
 					</p>
 				</div>
@@ -1045,6 +1053,11 @@ const ApiOptions = ({ showModelOptions, apiErrorMessage, modelIdErrorMessage, is
 					{modelIdErrorMessage}
 				</p>
 			)}
+
+			<AddProviderDialog
+				isOpen={showAddProviderDialog}
+				onClose={() => setShowAddProviderDialog(false)}
+			/>
 		</div>
 	)
 }
@@ -1083,7 +1096,7 @@ export const ModelInfoView = ({
 }) => {
 	const isGemini = Object.keys(geminiModels).includes(selectedModelId)
 	const isQwen = Object.keys(qwenModels).includes(selectedModelId)
-	
+
 	console.log(`modelInfo: `);
 	console.log(modelInfo);
 

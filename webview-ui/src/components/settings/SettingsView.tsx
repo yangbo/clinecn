@@ -162,10 +162,9 @@ const SettingsView = ({ onDone }: SettingsViewProps) => {
 							padding: 0,
 						}}>
 						如果您有任何问题或反馈，欢迎在{" "}
-						<VSCodeLink href="https://github.com/cline/cline" style={{ display: "inline" }}>
-							https://github.com/cline/cline
-						</VSCodeLink>{" "}
-						提出问题
+						<VSCodeLink href="https://gitee.com/terawin/clinecn" style={{ display: "inline" }}>
+						https://gitee.com/terawin/clinecn
+						</VSCodeLink>{" "}提出来。
 					</p>
 					<p
 						style={{
