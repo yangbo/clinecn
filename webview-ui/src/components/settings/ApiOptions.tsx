@@ -83,7 +83,9 @@ const ApiOptions = ({ showModelOptions, apiErrorMessage, modelIdErrorMessage, is
 	const [anthropicBaseUrlSelected, setAnthropicBaseUrlSelected] = useState(!!apiConfiguration?.anthropicBaseUrl)
 	const [azureApiVersionSelected, setAzureApiVersionSelected] = useState(!!apiConfiguration?.azureApiVersion)
 	const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false)
-	const [showAddProviderDialog, setShowAddProviderDialog] = useState<boolean>(false)
+const [showAddProviderDialog, setShowAddProviderDialog] = useState<boolean>(false)
+const [selectedProvider, setSelectedProvider] = useState<string>("")
+const [dynamicProvider, setDynamicProvider] = useState<string>("")
 
 	const handleInputChange = (field: keyof ApiConfiguration) => (event: any) => {
 		setApiConfiguration({
@@ -92,7 +94,7 @@ const ApiOptions = ({ showModelOptions, apiErrorMessage, modelIdErrorMessage, is
 		})
 	}
 
-	const { selectedProvider, selectedModelId, selectedModelInfo } = useMemo(() => {
+const { selectedProvider: providerFromState, selectedModelId, selectedModelInfo } = useMemo(() => {
 		return normalizeApiConfiguration(apiConfiguration)
 	}, [apiConfiguration])
 
@@ -176,36 +178,61 @@ const ApiOptions = ({ showModelOptions, apiErrorMessage, modelIdErrorMessage, is
 					<span style={{ fontWeight: 500 }}>API供应商</span>
 				</label>
 				<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-					<VSCodeDropdown
-						id="api-provider"
-						value={selectedProvider}
-						onChange={handleInputChange("apiProvider")}
-						style={{
-							minWidth: 130,
-							position: "relative",
-						}}>
-						<VSCodeOption value="openai">OpenAI 兼容API</VSCodeOption>
-						<VSCodeOption value="qwen">阿里千问</VSCodeOption>
-						<VSCodeOption value="deepseek">DeepSeek</VSCodeOption>
-						<VSCodeOption value="openrouter">OpenRouter</VSCodeOption>
-						<VSCodeOption value="ollama">Ollama</VSCodeOption>
-						<VSCodeOption value="gemini">Google Gemini</VSCodeOption>
-						<VSCodeOption value="anthropic">Anthropic</VSCodeOption>
-						<VSCodeOption value="openai-native">OpenAI</VSCodeOption>
-						<VSCodeOption value="vscode-lm">VS Code LM API</VSCodeOption>
-						<VSCodeOption value="bedrock">AWS Bedrock</VSCodeOption>
-						<VSCodeOption value="vertex">GCP Vertex AI</VSCodeOption>
-						<VSCodeOption value="mistral">Mistral</VSCodeOption>
-						<VSCodeOption value="requesty">Requesty</VSCodeOption>
-						<VSCodeOption value="together">Together</VSCodeOption>
-						<VSCodeOption value="lmstudio">LM Studio</VSCodeOption>
-						<VSCodeOption value="litellm">LiteLLM</VSCodeOption>
-					</VSCodeDropdown>
-					<VSCodeButton
-						appearance="secondary"
-						onClick={() => setShowAddProviderDialog(true)}
-						style={{ marginLeft: '5px' }}
-					>管理供应商</VSCodeButton>
+<VSCodeDropdown
+	id="api-provider"
+	value={selectedProvider}
+	onChange={(event) => {
+		const target = event.target as HTMLSelectElement;
+		const newValue = target.value;
+		setSelectedProvider(newValue);
+		if (newValue !== "openai" && newValue !== "") {
+			setDynamicProvider(newValue);
+		} else {
+			setDynamicProvider("");
+		}
+		handleInputChange("apiProvider")(event);
+	}}
+	style={{
+		minWidth: 130,
+		position: "relative",
+	}}>
+	<VSCodeOption value="openai">OpenAI 兼容API</VSCodeOption>
+	<VSCodeOption value="qwen">阿里千问</VSCodeOption>
+	<VSCodeOption value="deepseek">DeepSeek</VSCodeOption>
+	<VSCodeOption value="openrouter">OpenRouter</VSCodeOption>
+	<VSCodeOption value="ollama">Ollama</VSCodeOption>
+	<VSCodeOption value="gemini">Google Gemini</VSCodeOption>
+	<VSCodeOption value="anthropic">Anthropic</VSCodeOption>
+	<VSCodeOption value="openai-native">OpenAI</VSCodeOption>
+	<VSCodeOption value="vscode-lm">VS Code LM API</VSCodeOption>
+	<VSCodeOption value="bedrock">AWS Bedrock</VSCodeOption>
+	<VSCodeOption value="vertex">GCP Vertex AI</VSCodeOption>
+	<VSCodeOption value="mistral">Mistral</VSCodeOption>
+	<VSCodeOption value="requesty">Requesty</VSCodeOption>
+	<VSCodeOption value="together">Together</VSCodeOption>
+	<VSCodeOption value="lmstudio">LM Studio</VSCodeOption>
+	<VSCodeOption value="litellm">LiteLLM</VSCodeOption>
+</VSCodeDropdown>
+{selectedProvider === "openai" ? (
+	<VSCodeButton
+		appearance="secondary"
+		onClick={() => setShowAddProviderDialog(true)}
+		style={{ marginLeft: '5px' }}
+	>新增供应商</VSCodeButton>
+) : dynamicProvider ? (
+	<VSCodeButton
+		appearance="secondary"
+		onClick={() => setShowAddProviderDialog(true)}
+		style={{ marginLeft: '5px' }}
+	>删除供应商</VSCodeButton>
+) : (
+	<VSCodeButton
+		appearance="secondary"
+		onClick={() => setShowAddProviderDialog(true)}
+		style={{ marginLeft: '5px' }}
+	>管理供应商</VSCodeButton>
+)}
+
 				</div>
 			</DropdownContainer>
 			{selectedProvider === "anthropic" && (
