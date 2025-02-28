@@ -5,7 +5,8 @@ interface ApiMetrics {
 	totalTokensOut: number
 	totalCacheWrites?: number
 	totalCacheReads?: number
-	totalCost: number
+	totalCost: number,
+	currency?: string
 }
 
 /**
@@ -32,6 +33,7 @@ export function getApiMetrics(messages: ClineMessage[]): ApiMetrics {
 		totalCacheWrites: undefined,
 		totalCacheReads: undefined,
 		totalCost: 0,
+		currency: "USD",
 	}
 
 	messages.forEach((message) => {

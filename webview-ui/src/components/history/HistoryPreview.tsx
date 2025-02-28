@@ -2,7 +2,7 @@ import { VSCodeButton } from "@vscode/webview-ui-toolkit/react"
 import { useExtensionState } from "../../context/ExtensionStateContext"
 import { vscode } from "../../utils/vscode"
 import { memo } from "react"
-import { formatLargeNumber } from "../../utils/format"
+import { formatLargeNumber, formatPrice } from "../../utils/format"
 
 type HistoryPreviewProps = {
 	showHistoryView: () => void
@@ -126,7 +126,7 @@ const HistoryPreview = ({ showHistoryView }: HistoryPreviewProps) => {
 									{!!item.totalCost && (
 										<>
 											{" • "}
-											<span>API 费用：${item.totalCost?.toFixed(4)}</span>
+											<span>API 费用：{formatPrice(item.totalCost, item.currency)}</span>
 										</>
 									)}
 								</div>

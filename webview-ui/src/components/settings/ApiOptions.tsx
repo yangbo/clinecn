@@ -43,6 +43,7 @@ import OpenRouterModelPicker, { ModelDescriptionMarkdown } from "./OpenRouterMod
 import styled from "styled-components"
 import * as vscodemodels from "vscode"
 import AddProviderDialog from "./AddProviderDialog";
+import { formatPrice } from "../../utils/format"
 
 interface ApiOptionsProps {
 	showModelOptions: boolean
@@ -83,9 +84,9 @@ const ApiOptions = ({ showModelOptions, apiErrorMessage, modelIdErrorMessage, is
 	const [anthropicBaseUrlSelected, setAnthropicBaseUrlSelected] = useState(!!apiConfiguration?.anthropicBaseUrl)
 	const [azureApiVersionSelected, setAzureApiVersionSelected] = useState(!!apiConfiguration?.azureApiVersion)
 	const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false)
-const [showAddProviderDialog, setShowAddProviderDialog] = useState<boolean>(false)
-const [selectedProvider, setSelectedProvider] = useState<string>("")
-const [dynamicProvider, setDynamicProvider] = useState<string>("")
+	const [showAddProviderDialog, setShowAddProviderDialog] = useState<boolean>(false)
+	const [selectedProvider, setSelectedProvider] = useState<string>("")
+	const [dynamicProvider, setDynamicProvider] = useState<string>("")
 
 	const handleInputChange = (field: keyof ApiConfiguration) => (event: any) => {
 		setApiConfiguration({
@@ -94,7 +95,7 @@ const [dynamicProvider, setDynamicProvider] = useState<string>("")
 		})
 	}
 
-const { selectedProvider: providerFromState, selectedModelId, selectedModelInfo } = useMemo(() => {
+	const { selectedProvider: providerFromState, selectedModelId, selectedModelInfo } = useMemo(() => {
 		return normalizeApiConfiguration(apiConfiguration)
 	}, [apiConfiguration])
 
@@ -177,63 +178,42 @@ const { selectedProvider: providerFromState, selectedModelId, selectedModelInfo 
 				<label htmlFor="api-provider">
 					<span style={{ fontWeight: 500 }}>API供应商</span>
 				</label>
-				<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-<VSCodeDropdown
-	id="api-provider"
-	value={selectedProvider}
-	onChange={(event) => {
-		const target = event.target as HTMLSelectElement;
-		const newValue = target.value;
-		setSelectedProvider(newValue);
-		if (newValue !== "openai" && newValue !== "") {
-			setDynamicProvider(newValue);
-		} else {
-			setDynamicProvider("");
-		}
-		handleInputChange("apiProvider")(event);
-	}}
-	style={{
-		minWidth: 130,
-		position: "relative",
-	}}>
-	<VSCodeOption value="openai">OpenAI 兼容API</VSCodeOption>
-	<VSCodeOption value="qwen">阿里千问</VSCodeOption>
-	<VSCodeOption value="deepseek">DeepSeek</VSCodeOption>
-	<VSCodeOption value="openrouter">OpenRouter</VSCodeOption>
-	<VSCodeOption value="ollama">Ollama</VSCodeOption>
-	<VSCodeOption value="gemini">Google Gemini</VSCodeOption>
-	<VSCodeOption value="anthropic">Anthropic</VSCodeOption>
-	<VSCodeOption value="openai-native">OpenAI</VSCodeOption>
-	<VSCodeOption value="vscode-lm">VS Code LM API</VSCodeOption>
-	<VSCodeOption value="bedrock">AWS Bedrock</VSCodeOption>
-	<VSCodeOption value="vertex">GCP Vertex AI</VSCodeOption>
-	<VSCodeOption value="mistral">Mistral</VSCodeOption>
-	<VSCodeOption value="requesty">Requesty</VSCodeOption>
-	<VSCodeOption value="together">Together</VSCodeOption>
-	<VSCodeOption value="lmstudio">LM Studio</VSCodeOption>
-	<VSCodeOption value="litellm">LiteLLM</VSCodeOption>
-</VSCodeDropdown>
-{selectedProvider === "openai" ? (
-	<VSCodeButton
-		appearance="secondary"
-		onClick={() => setShowAddProviderDialog(true)}
-		style={{ marginLeft: '5px' }}
-	>新增供应商</VSCodeButton>
-) : dynamicProvider ? (
-	<VSCodeButton
-		appearance="secondary"
-		onClick={() => setShowAddProviderDialog(true)}
-		style={{ marginLeft: '5px' }}
-	>删除供应商</VSCodeButton>
-) : (
-	<VSCodeButton
-		appearance="secondary"
-		onClick={() => setShowAddProviderDialog(true)}
-		style={{ marginLeft: '5px' }}
-	>管理供应商</VSCodeButton>
-)}
 
-				</div>
+				<VSCodeDropdown
+					id="api-provider"
+					value={selectedProvider}
+					onChange={(event) => {
+						const target = event.target as HTMLSelectElement;
+						const newValue = target.value;
+						setSelectedProvider(newValue);
+						if (newValue !== "openai" && newValue !== "") {
+							setDynamicProvider(newValue);
+						} else {
+							setDynamicProvider("");
+						}
+						handleInputChange("apiProvider")(event);
+					}}
+					style={{
+						minWidth: 130,
+						position: "relative",
+					}}>
+					<VSCodeOption value="openai">OpenAI 兼容API</VSCodeOption>
+					<VSCodeOption value="qwen">阿里千问</VSCodeOption>
+					<VSCodeOption value="deepseek">DeepSeek</VSCodeOption>
+					<VSCodeOption value="openrouter">OpenRouter</VSCodeOption>
+					<VSCodeOption value="ollama">Ollama</VSCodeOption>
+					<VSCodeOption value="gemini">Google Gemini</VSCodeOption>
+					<VSCodeOption value="anthropic">Anthropic</VSCodeOption>
+					<VSCodeOption value="openai-native">OpenAI</VSCodeOption>
+					<VSCodeOption value="vscode-lm">VS Code LM API</VSCodeOption>
+					<VSCodeOption value="bedrock">AWS Bedrock</VSCodeOption>
+					<VSCodeOption value="vertex">GCP Vertex AI</VSCodeOption>
+					<VSCodeOption value="mistral">Mistral</VSCodeOption>
+					<VSCodeOption value="requesty">Requesty</VSCodeOption>
+					<VSCodeOption value="together">Together</VSCodeOption>
+					<VSCodeOption value="lmstudio">LM Studio</VSCodeOption>
+					<VSCodeOption value="litellm">LiteLLM</VSCodeOption>
+				</VSCodeDropdown>
 			</DropdownContainer>
 			{selectedProvider === "anthropic" && (
 				<div>
@@ -1081,6 +1061,25 @@ const { selectedProvider: providerFromState, selectedModelId, selectedModelInfo 
 				</p>
 			)}
 
+			<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+				{selectedProvider === "openai" ? (
+					<VSCodeButton
+						appearance="secondary"
+						onClick={() => setShowAddProviderDialog(true)}
+					>新增供应商</VSCodeButton>
+				) : dynamicProvider ? (
+					<VSCodeButton
+						appearance="secondary"
+						onClick={() => setShowAddProviderDialog(true)}
+					>删除供应商</VSCodeButton>
+				) : (
+					<VSCodeButton
+						appearance="secondary"
+						onClick={() => setShowAddProviderDialog(true)}
+					>管理供应商</VSCodeButton>
+				)}
+			</div>
+
 			<AddProviderDialog
 				isOpen={showAddProviderDialog}
 				onClose={() => setShowAddProviderDialog(false)}
@@ -1091,21 +1090,6 @@ const { selectedProvider: providerFromState, selectedModelId, selectedModelInfo 
 
 export function getOpenRouterAuthUrl(uriScheme?: string) {
 	return `https://openrouter.ai/auth?callback_url=${uriScheme || "vscode"}://cline/openrouter`
-}
-
-/**
- * 格式化价格
- * @param price 价格
- * @param currency 货币单位
- * @returns 格式化后的价格
- */
-export const formatPrice = (price: number, currency?: string) => {
-	return new Intl.NumberFormat("zh-CN", {
-		style: "currency",
-		currency: currency || "USD",
-		minimumFractionDigits: 2,
-		maximumFractionDigits: 2,
-	}).format(price)
 }
 
 export const ModelInfoView = ({
@@ -1247,6 +1231,12 @@ const ModelInfoSupportsItem = ({
 	</span>
 )
 
+/**
+ * 规范化 API 配置，返回选定的提供者、模型 ID 和模型信息。
+ *
+ * @param apiConfiguration - API 配置对象。
+ * @returns 包含选定提供者、模型 ID 和模型信息的对象。
+ */
 export function normalizeApiConfiguration(apiConfiguration?: ApiConfiguration): {
 	selectedProvider: ApiProvider
 	selectedModelId: string

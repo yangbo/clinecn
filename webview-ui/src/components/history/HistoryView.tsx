@@ -4,7 +4,7 @@ import { vscode } from "../../utils/vscode"
 import { Virtuoso } from "react-virtuoso"
 import { memo, useMemo, useState, useEffect } from "react"
 import Fuse, { FuseResult } from "fuse.js"
-import { formatLargeNumber } from "../../utils/format"
+import { formatLargeNumber, formatPrice } from "../../utils/format"
 import { formatSize } from "../../utils/size"
 
 type HistoryViewProps = {
@@ -435,7 +435,7 @@ const HistoryView = ({ onDone }: HistoryViewProps) => {
 														style={{
 															color: "var(--vscode-descriptionForeground)",
 														}}>
-														${item.totalCost?.toFixed(4)}
+														{formatPrice(item.totalCost, item.currency)}
 													</span>
 												</div>
 												<ExportButton itemId={item.id} />

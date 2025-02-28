@@ -98,6 +98,7 @@ export const GlobalFileNames = {
 export class ClineProvider implements vscode.WebviewViewProvider {
 	public static readonly sideBarId = "clinecn.SidebarProvider" // used in package.json as the view's id. This value cannot be changed due to how vscode caches views based on their id, and updating the id would break existing instances of the extension.
 	public static readonly tabPanelId = "clinecn.TabPanelProvider"
+	// 会有多个实例，比如 tabBar 对应一个 ClineProvider、sidebar 对应一个 ClineProvider
 	private static activeInstances: Set<ClineProvider> = new Set()
 	private disposables: vscode.Disposable[] = []
 	private view?: vscode.WebviewView | vscode.WebviewPanel
@@ -357,7 +358,7 @@ export class ClineProvider implements vscode.WebviewViewProvider {
             <meta http-equiv="Content-Security-Policy" content="default-src 'none'; font-src ${webview.cspSource}; style-src ${webview.cspSource} 'unsafe-inline'; img-src ${webview.cspSource} https: data:; script-src 'nonce-${nonce}';">
             <link rel="stylesheet" type="text/css" href="${stylesUri}">
 			<link href="${codiconsUri}" rel="stylesheet" />
-            <title>Cline</title>
+            <title>ClineCN</title>
           </head>
           <body>
             <noscript>You need to enable JavaScript to run this app.</noscript>

@@ -4,7 +4,7 @@ import { useWindowSize } from "react-use"
 import { mentionRegexGlobal } from "../../../../src/shared/context-mentions"
 import { ClineMessage } from "../../../../src/shared/ExtensionMessage"
 import { useExtensionState } from "../../context/ExtensionStateContext"
-import { formatLargeNumber } from "../../utils/format"
+import { formatLargeNumber, formatPrice } from "../../utils/format"
 import { formatSize } from "../../utils/size"
 import { vscode } from "../../utils/vscode"
 import Thumbnails from "../common/Thumbnails"
@@ -438,7 +438,7 @@ const TaskHeader: React.FC<TaskHeaderProps> = ({
 											gap: "4px",
 										}}>
 										<span style={{ fontWeight: "bold" }}>API 费用:</span>
-										<span>${totalCost?.toFixed(4)}</span>
+										<span>{formatPrice(totalCost, selectedModelInfo.currency)}</span>
 									</div>
 									<DeleteButton taskSize={formatSize(currentTaskItem?.size)} taskId={currentTaskItem?.id} />
 								</div>

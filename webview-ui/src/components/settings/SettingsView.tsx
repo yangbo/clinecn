@@ -94,7 +94,7 @@ const SettingsView = ({ onDone }: SettingsViewProps) => {
 					/>
 				</div>
 
-				<div style={{ marginBottom: 5 }}>
+				<div style={{ marginBottom: "5px", marginTop: "10px" }}>
 					<VSCodeTextArea
 						value={customInstructions ?? ""}
 						style={{ width: "100%" }}
