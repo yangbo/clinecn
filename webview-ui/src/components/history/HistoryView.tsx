@@ -319,7 +319,7 @@ const HistoryView = ({ onDone }: HistoryViewProps) => {
 														fontWeight: 500,
 														color: "var(--vscode-descriptionForeground)",
 													}}>
-													词元数(Tokens):
+													Tokens:
 												</span>
 												<span
 													style={{

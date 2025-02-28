@@ -340,7 +340,7 @@ const TaskHeader: React.FC<TaskHeaderProps> = ({
 										gap: "4px",
 										flexWrap: "wrap",
 									}}>
-									<span style={{ fontWeight: "bold" }}>词元数:</span>
+									<span style={{ fontWeight: "bold" }}>Tokens:</span>
 									<span
 										style={{
 											display: "flex",
