@@ -92,8 +92,8 @@ const McpView = ({ onDone }: McpViewProps) => {
 					alignItems: "center",
 					padding: "10px 17px 10px 20px",
 				}}>
-				<h3 style={{ color: "var(--vscode-foreground)", margin: 0 }}>MCP Servers</h3>
-				<VSCodeButton onClick={onDone}>Done</VSCodeButton>
+				<h3 style={{ color: "var(--vscode-foreground)", margin: 0 }}>MCP 服务器</h3>
+				<VSCodeButton onClick={onDone}>完成</VSCodeButton>
 			</div>
 
 			<div style={{ flex: 1, overflow: "auto", padding: "0 20px" }}>
@@ -104,18 +104,14 @@ const McpView = ({ onDone }: McpViewProps) => {
 						marginBottom: "16px",
 						marginTop: "5px",
 					}}>
-					The{" "}
-					<VSCodeLink href="https://github.com/modelcontextprotocol" style={{ display: "inline" }}>
-						Model Context Protocol
-					</VSCodeLink>{" "}
-					enables communication with locally running MCP servers that provide additional tools and resources to extend
-					Cline's capabilities. You can use{" "}
+					<VSCodeLink href="https://github.com/modelcontextprotocol" style={{ display: "inline" }}>模型上下文协议（Model Context Protocol）</VSCodeLink>
+					使得用户能够与本地运行的MCP服务器进行通信。这些服务器提供了额外的工具和资源，以扩展Cline的功能。
+					你可以
 					<VSCodeLink href="https://github.com/modelcontextprotocol/servers" style={{ display: "inline" }}>
-						community-made servers
-					</VSCodeLink>{" "}
-					or ask Cline to create new tools specific to your workflow (e.g., "add a tool that gets the latest npm docs").{" "}
+						使用社区制作的服务器
+					</VSCodeLink>，也可以让Cline为你创建特定于你工作流程的新工具（例如，“添加一个获取最新npm文档的工具”）。
 					<VSCodeLink href="https://x.com/sdrzn/status/1867271665086074969" style={{ display: "inline" }}>
-						See a demo here.
+						点击此处查看演示。
 					</VSCodeLink>
 				</div>
 
@@ -142,7 +138,7 @@ const McpView = ({ onDone }: McpViewProps) => {
 							vscode.postMessage({ type: "openMcpSettings" })
 						}}>
 						<span className="codicon codicon-server" style={{ marginRight: "6px" }}></span>
-						Configure MCP Servers
+						配置 MCP 服务器
 					</VSCodeButton>
 				</div>
 
@@ -156,7 +152,7 @@ const McpView = ({ onDone }: McpViewProps) => {
 							})
 						}}
 						style={{ fontSize: "12px" }}>
-						Advanced MCP Settings
+						MCP高级设置
 					</VSCodeLink>
 				</div>
 
@@ -313,7 +309,7 @@ const ServerRow = ({ server }: { server: McpServer }) => {
 						<VSCodePanels>
 							<VSCodePanelTab id="tools">Tools ({server.tools?.length || 0})</VSCodePanelTab>
 							<VSCodePanelTab id="resources">
-								Resources ({[...(server.resourceTemplates || []), ...(server.resources || [])].length || 0})
+								资源 ({[...(server.resourceTemplates || []), ...(server.resources || [])].length || 0})
 							</VSCodePanelTab>
 
 							<VSCodePanelView id="tools-view">
@@ -335,14 +331,14 @@ const ServerRow = ({ server }: { server: McpServer }) => {
 											padding: "10px 0",
 											color: "var(--vscode-descriptionForeground)",
 										}}>
-										No tools found
+										没有找到工具
 									</div>
 								)}
 							</VSCodePanelView>
 
 							<VSCodePanelView id="resources-view">
 								{(server.resources && server.resources.length > 0) ||
-								(server.resourceTemplates && server.resourceTemplates.length > 0) ? (
+									(server.resourceTemplates && server.resourceTemplates.length > 0) ? (
 									<div
 										style={{
 											display: "flex",
@@ -363,7 +359,7 @@ const ServerRow = ({ server }: { server: McpServer }) => {
 											padding: "10px 0",
 											color: "var(--vscode-descriptionForeground)",
 										}}>
-										No resources found
+										没有找到资源
 									</div>
 								)}
 							</VSCodePanelView>
@@ -377,7 +373,7 @@ const ServerRow = ({ server }: { server: McpServer }) => {
 								width: "calc(100% - 14px)",
 								margin: "0 7px 3px 7px",
 							}}>
-							{server.status === "connecting" ? "Restarting..." : "Restart Server"}
+							{server.status === "connecting" ? "重启中..." : "重启服务器"}
 						</VSCodeButton>
 					</div>
 				)

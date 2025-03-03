@@ -40,7 +40,7 @@ const AccountView = ({ onDone }: AccountViewProps) => {
 					paddingRight: 17,
 				}}>
 				<h3 style={{ color: "var(--vscode-foreground)", margin: 0 }}>Account</h3>
-				<VSCodeButton onClick={onDone}>Done</VSCodeButton>
+				<VSCodeButton onClick={onDone}>完成</VSCodeButton>
 			</div>
 			<div
 				style={{

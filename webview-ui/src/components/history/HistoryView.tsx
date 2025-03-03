@@ -144,7 +144,7 @@ const HistoryView = ({ onDone }: HistoryViewProps) => {
 						}}>
 						历史
 					</h3>
-					<VSCodeButton onClick={onDone}>Done</VSCodeButton>
+					<VSCodeButton onClick={onDone}>完成</VSCodeButton>
 				</div>
 				<div style={{ padding: "5px 17px 6px 17px" }}>
 					<div
