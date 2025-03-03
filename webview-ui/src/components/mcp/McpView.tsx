@@ -105,11 +105,11 @@ const McpView = ({ onDone }: McpViewProps) => {
 						marginTop: "5px",
 					}}>
 					<VSCodeLink href="https://github.com/modelcontextprotocol" style={{ display: "inline" }}>模型上下文协议（Model Context Protocol）</VSCodeLink>
-					使得用户能够与本地运行的MCP服务器进行通信。这些服务器提供了额外的工具和资源，以扩展Cline的功能。
+					使得用户能够与本地运行的MCP服务器进行通信。这些服务器提供了额外的工具和资源，以扩展ClineCN的功能。
 					你可以
 					<VSCodeLink href="https://github.com/modelcontextprotocol/servers" style={{ display: "inline" }}>
 						使用社区制作的服务器
-					</VSCodeLink>，也可以让Cline为你创建特定于你工作流程的新工具（例如，“添加一个获取最新npm文档的工具”）。
+					</VSCodeLink>，也可以让ClineCN为你创建特定于你工作流程的新工具（例如，“添加一个获取最新npm文档的工具”）。
 					<VSCodeLink href="https://x.com/sdrzn/status/1867271665086074969" style={{ display: "inline" }}>
 						点击此处查看演示。
 					</VSCodeLink>
