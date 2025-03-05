@@ -1080,7 +1080,12 @@ const ChatTextArea = forwardRef<HTMLTextAreaElement, ChatTextAreaProps>(
 										modelIdErrorMessage={undefined}
 										isPopup={true}
 									/>
-									<VSCodeButton onClick={handleModelButtonClick}>关闭</VSCodeButton>
+									<VSCodeButton onClick={handleModelButtonClick}
+										style={{
+											position: "absolute",
+											right: "17px",
+											bottom: "12px",
+										}}>关闭</VSCodeButton>
 								</ModelSelectorTooltip>
 							)}
 						</ModelContainer>

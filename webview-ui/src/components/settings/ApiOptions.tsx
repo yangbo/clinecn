@@ -173,7 +173,7 @@ const ApiOptions = ({ showModelOptions, apiErrorMessage, modelIdErrorMessage, is
 	}
 
 	return (
-		<div style={{ display: "flex", flexDirection: "column", gap: 5, marginBottom: isPopup ? -10 : 0 }}>
+		<div style={{ display: "flex", flexDirection: "column", gap: 5, marginBottom: 0 }}>
 			<DropdownContainer className="dropdown-container">
 				<label htmlFor="api-provider">
 					<span style={{ fontWeight: 500 }}>API供应商</span>
@@ -1061,24 +1061,21 @@ const ApiOptions = ({ showModelOptions, apiErrorMessage, modelIdErrorMessage, is
 				</p>
 			)}
 
-			<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-				{selectedProvider === "openai" ? (
-					<VSCodeButton
-						appearance="secondary"
-						onClick={() => setShowAddProviderDialog(true)}
-					>新增供应商</VSCodeButton>
-				) : dynamicProvider ? (
-					<VSCodeButton
-						appearance="secondary"
-						onClick={() => setShowAddProviderDialog(true)}
-					>删除供应商</VSCodeButton>
-				) : (
-					<VSCodeButton
-						appearance="secondary"
-						onClick={() => setShowAddProviderDialog(true)}
-					>管理供应商</VSCodeButton>
-				)}
-			</div>
+			{isPopup && (
+				<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+					{selectedProvider === "openai" ? (
+						<VSCodeButton
+							appearance="secondary"
+							onClick={() => setShowAddProviderDialog(true)}
+						>新增供应商</VSCodeButton>
+					) : dynamicProvider ? (
+						<VSCodeButton
+							appearance="secondary"
+							onClick={() => setShowAddProviderDialog(true)}
+						>删除供应商</VSCodeButton>
+					) : <></>}
+				</div>
+			)}
 
 			<AddProviderDialog
 				isOpen={showAddProviderDialog}
