@@ -336,37 +336,154 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 
 		// Use a nonce to only allow a specific script to be run.
 		/*
-        content security policy of your webview to only allow scripts that have a specific nonce
-        create a content security policy meta tag so that only loading scripts with a nonce is allowed
-        As your extension grows you will likely want to add custom styles, fonts, and/or images to your webview. If you do, you will need to update the content security policy meta tag to explicity allow for these resources. E.g.
-                <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource}; font-src ${webview.cspSource}; img-src ${webview.cspSource} https:; script-src 'nonce-${nonce}';">
+		content security policy of your webview to only allow scripts that have a specific nonce
+		create a content security policy meta tag so that only loading scripts with a nonce is allowed
+		As your extension grows you will likely want to add custom styles, fonts, and/or images to your webview. If you do, you will need to update the content security policy meta tag to explicity allow for these resources. E.g.
+				<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource}; font-src ${webview.cspSource}; img-src ${webview.cspSource} https:; script-src 'nonce-${nonce}';">
 		- 'unsafe-inline' is required for styles due to vscode-webview-toolkit's dynamic style injection
 		- since we pass base64 images to the webview, we need to specify img-src ${webview.cspSource} data:;
 
-        in meta tag we add nonce attribute: A cryptographic nonce (only used once) to allow scripts. The server must generate a unique nonce value each time it transmits a policy. It is critical to provide a nonce that cannot be guessed as bypassing a resource's policy is otherwise trivial.
-        */
+		in meta tag we add nonce attribute: A cryptographic nonce (only used once) to allow scripts. The server must generate a unique nonce value each time it transmits a policy. It is critical to provide a nonce that cannot be guessed as bypassing a resource's policy is otherwise trivial.
+		*/
 		const nonce = getNonce()
 
-		// Tip: Install the es6-string-html VS Code extension to enable code highlighting below
-		return /*html*/ `
-        <!DOCTYPE html>
-        <html lang="en">
-          <head>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-            <meta name="theme-color" content="#000000">
-            <meta http-equiv="Content-Security-Policy" content="default-src 'none'; font-src ${webview.cspSource}; style-src ${webview.cspSource} 'unsafe-inline'; img-src ${webview.cspSource} https: data:; script-src 'nonce-${nonce}';">
-            <link rel="stylesheet" type="text/css" href="${stylesUri}">
-			<link href="${codiconsUri}" rel="stylesheet" />
-            <title>ClineCN</title>
-          </head>
-          <body>
-            <noscript>You need to enable JavaScript to run this app.</noscript>
-            <div id="root"></div>
-            <script nonce="${nonce}" src="${scriptUri}"></script>
-          </body>
-        </html>
-      `
+		const DEBUG = true;
+		if (DEBUG) {
+			// 用 iframe 模式装载 react app，但这样就不能往 vscode 发送消息了
+			const htmlUri = "http://localhost:3000/";
+			// 用 iframe 方法访问
+			return /*html*/`
+			<!DOCTYPE html>
+			<html>
+			<head>
+			  <title>Webview 主页面</title>
+			  <style>
+				html, body {
+				  height: 100%; /* 确保父容器占据整个视口高度 */
+				  margin: 0;
+				  padding: 0;
+				}
+				iframe {
+				  width: 100%;
+				  height: 100%;
+				  border: none; /* 移除 iframe 边框 */
+				}
+			  </style>
+			</head>
+			<body>
+			  <iframe id="myIframe" src="${htmlUri}" width="100%" height="100%"></iframe> 
+			  <script>
+				
+				// 创建 main frame 和 iframe 之间的 Message Channel，用来实现 WebView.postMessage()、getState()和setState() 函数代理
+				const channelPostMessage = new MessageChannel();
+				const channelSetState = new MessageChannel();
+				const channelGetState = new MessageChannel();
+			
+				/**
+				 * 创建 main frame 和 iframe 之间的 Message Channel，
+				 * 实现 WebView.postMessage() 函数代理
+				 */
+				function proxyVscode(iframe, vscode){
+				  // 在 iframe onloaded 事件时再发送 vscode api 到 iframe
+				  iframe.onload = function() {
+					// 代理 vscode.postMesssage() 函数
+					console.log("[main frame] 创建消息通道，实现 postMessage 函数代理");
+					iframe.contentWindow.postMessage({
+						command: 'createChannel',
+						api: "postMessage"
+					}, '*', [channelPostMessage.port2]);
+					// 侦听通道收到的消息
+					channelPostMessage.port1.onmessage = function(event) {
+					  console.log("[main frame] 收到 iframe postMessage 消息: ");
+					  console.log(event.data);
+					  vscode.postMessage(event.data);
+					};
+			
+					// 代理 vscode.getState() 函数
+					console.log("[main frame] 创建消息通道，实现 getState 函数代理");
+					iframe.contentWindow.postMessage({
+						command: 'createChannel',
+						api: "getState"
+					}, '*', [channelGetState.port2]);
+					// 侦听通道收到的消息
+					channelGetState.port1.onmessage = function(event) {
+					  console.log("[main frame] 收到 iframe getState 消息: ");
+					  console.log(event.data);
+					  const state = vscode.getState();
+					  // 发送 getState() 结果到 iframe
+					  channelGetState.port1.postMessage(state);
+					}
+			
+					// 代理 vscode.setState() 函数
+					console.log("[main frame] 创建消息通道，实现 setState 函数代理");
+					iframe.contentWindow.postMessage({
+						command: 'createChannel',
+						api: "setState"
+					}, '*', [channelSetState.port2]);
+					// 侦听通道收到的消息
+					channelSetState.port1.onmessage = function(event) {
+					  console.log("[main frame] 收到 iframe setState 消息: ");
+					  console.log(event.data);
+					  const state = vscode.setState(event.data);
+					}
+				  }
+				}
+			
+				// 还没有获取过 vscode api，需要获取
+				if (!window.vsCodeApi){
+				  window.vsCodeApi = acquireVsCodeApi();
+				  console.log("[main frame] 获取到 window.vsCodeApi: ");
+				  console.log(window.vsCodeApi);
+				} else {
+				  // 已经获取过 vscode api，不需要再获取
+				  console.log("[main frame] window.vsCodeApi 已经存在，不需要重新获取:");
+				  console.log(window.vsCodeApi);
+				}
+				// 准备接收 iframe 的 vscode api 消息
+				const iframe = document.getElementById('myIframe');
+				if (window.vsCodeApi) {
+				  proxyVscode(iframe, window.vsCodeApi);
+				}
+			
+				// 传递 vscode 的 css 样式
+				function sendVscodeCssVariablesToIframe(iframe) {
+				  const variables = {};
+				  // 获取所有CSS变量（自定义属性）
+				  const htmlElement = document.documentElement;
+				  const inlineStyle = htmlElement.getAttribute("style") || "";
+			
+				  iframe.addEventListener('load', () => {
+					console.log("发送 vscode css 变量到 iframe");
+					iframe.contentWindow.postMessage({ type: 'vscodeInlineStyles', styles: inlineStyle }, '*');
+				  });
+				}
+				sendVscodeCssVariablesToIframe(iframe);
+			  </script>
+			</body>
+			</html>
+			`;
+		} else {
+			// Tip: Install the es6-string-html VS Code extension to enable code highlighting below
+			return /*html*/ `
+			<!DOCTYPE html>
+			<html lang="zh_CN">
+			<head>
+				<meta charset="utf-8">
+				<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+				<meta name="theme-color" content="#000000">
+				<meta http-equiv="Content-Security-Policy" content="default-src 'none'; font-src ${webview.cspSource}; style-src ${webview.cspSource} 'unsafe-inline'; img-src ${webview.cspSource} https: data:; script-src 'nonce-${nonce}';">
+				<link rel="stylesheet" type="text/css" href="${stylesUri}">
+				<link href="${codiconsUri}" rel="stylesheet" />
+				<title>ClineCN</title>
+			</head>
+			<body>
+				<noscript>You need to enable JavaScript to run this app.</noscript>
+				<div id="root"></div>
+				<script nonce="${nonce}" src="${scriptUri}"></script>
+			</body>
+			</html>
+		`
+		}
 	}
 
 	/**

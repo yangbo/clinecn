@@ -83,3 +83,17 @@ Copilot 的“解释”功能比较聪明，它会只截取选中的文本，或
 ## 创建一个社交媒体账号，类似 Cline 在 Twitter
 
 可以用新浪微博、抖音、小红书等。然后在其中发布 MCP 服务器使用的中文教程、示例，并替换 MCP 主页面中的“示例”链接。
+
+## 当 workspace 有多个目录时读取文件会变得混乱
+
+无法指定同名、不同 workspace 目录下的文件，需要能区分下不同的项目根目录。
+
+## 将 clinecn 改造为可以 debug react app 的高级开发模式
+
+### 解决启动后扩展显示空白的问题
+
+看 chrome dev tool 报告 main.css 找不到。
+
+```js
+Wa: Unable to read file 'e:\lab\nodejs\clinecn\webview-ui\build\static\css\main.css' (Error: Unable to resolve nonexistent file 'e:\lab\nodejs\clinecn\webview-ui\build\static\css\main.css')
+```
