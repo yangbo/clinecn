@@ -197,7 +197,7 @@
 		"clean": "rimraf dist",
 		"compile": "npm run check-types && npm run lint && node esbuild.js --production",
 		"watch": "npm run clean && npm-run-all -p watch:*",
-		"watch:esbuild": "set IS_DEV=true && node esbuild.js --watch",
+		"watch:esbuild": "node esbuild.js --watch",
 		"watch:webview": "cd webview-ui && npm run watch",
 		"vscode:prepublish": "npm run build:webview && node esbuild.js --production",
 		"package": "npm run clean && npm run build:webview && node esbuild.js --production && vsce package",

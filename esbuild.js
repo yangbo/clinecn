@@ -66,8 +66,7 @@ const copyWasmFiles = {
 const replaceDevPlugin = (options) => ({
 	name: 'replace-dev',
 	setup(build) {
-	  console.log(`IS_DEV: '${process.env.IS_DEV}'`);
-		if (process.env.IS_DEV.trim() === 'true') {
+		if (!production) {
 			console.log('不替换 IS_DEV = true');
 			return;
 		}
