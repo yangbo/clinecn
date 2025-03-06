@@ -1,29 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-// 用 vite 的 mode 功能替代
-
-// function replaceDevPlugin(options) {
-// 	return {
-// 		name: 'replaceDev',
-// 		enforce: 'pre',
-// 		transform(code, id) {
-// 			const dev_regexp = /IS_DEV *= *true/g;
-// 			if (id.endsWith('.tsx') && code.match(dev_regexp)) {
-// 				console.log(`替换了 ${id} 中的 IS_DEV = true`);
-// 				code = code.replace(dev_regexp, 'IS_DEV = false');
-// 				let sourcemap = this.getCombinedSourcemap();
-// 				console.log(sourcemap)
-// 				sourcemap.sourcesContent[0] = sourcemap.sourcesContent[0].replace(dev_regexp, 'IS_DEV = false');
-// 				return {
-// 					code: code,
-// 					map: sourcemap
-// 				};
-// 			}
-// 			return null;
-// 		},
-// 	};
-// }
+// 用 vite 的 mode 功能实现了条件编译
 
 // https://vitejs.dev/config/
 /** @type {import('vite').UserConfig} */

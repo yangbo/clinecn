@@ -195,9 +195,9 @@
 	"scripts": {
 		"install:all": "npm install && cd webview-ui && npm install",
 		"clean": "rimraf dist",
-		"compile": "npm run clean && tsc -p ./",
-		"watch": "npm-run-all -p watch:*",
-		"watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+		"compile": "npm run check-types && npm run lint && node esbuild.js --production",
+		"watch": "npm run clean && npm-run-all -p watch:*",
+		"watch:esbuild": "set IS_DEV=true && node esbuild.js --watch",
 		"watch:webview": "cd webview-ui && npm run watch",
 		"vscode:prepublish": "npm run build:webview && node esbuild.js --production",
 		"package": "npm run clean && npm run build:webview && node esbuild.js --production && vsce package",
@@ -219,8 +219,6 @@
 		"changeset": "changeset",
 		"version-packages": "changeset version",
 
-		"watch:esbuild-deprecated": "node esbuild.js --watch",
-		"compile-deprecated": "npm run check-types && npm run lint && node esbuild.js",
 		"package-deprecated": "npm run build:webview && npm run check-types && npm run lint && node esbuild.js --production"
 	},
 	"devDependencies": {

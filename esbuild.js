@@ -66,6 +66,11 @@ const copyWasmFiles = {
 const replaceDevPlugin = (options) => ({
 	name: 'replace-dev',
 	setup(build) {
+	  console.log(`IS_DEV: '${process.env.IS_DEV}'`);
+		if (process.env.IS_DEV.trim() === 'true') {
+			console.log('不替换 IS_DEV = true');
+			return;
+		}
 	  build.onLoad({ filter: /\.ts$/ }, async (args) => {
 		let contents = await fs.promises.readFile(args.path, 'utf8');
 		const dev_regexp = /IS_DEV *= *true/g;
