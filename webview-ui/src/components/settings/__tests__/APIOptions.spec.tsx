@@ -3,8 +3,8 @@ import { describe, it, expect, vi } from "vitest"
 import ApiOptions from "../ApiOptions"
 import { ExtensionStateContextProvider } from "../../../context/ExtensionStateContext"
 
-vi.mock("../../../context/ExtensionStateContext", async (importOriginal) => {
-	const actual = await importOriginal()
+vi.mock("../../../context/ExtensionStateContext", async () => {
+	const actual = await import("../../../context/ExtensionStateContext")
 	return {
 		...actual,
 		// your mocked methods
@@ -25,7 +25,7 @@ describe("ApiOptions Component", () => {
 	const mockPostMessage = vi.fn()
 
 	beforeEach(() => {
-		global.vscode = { postMessage: mockPostMessage } as any
+		(global as any).vscode = { postMessage: mockPostMessage }
 	})
 
 	it("renders Requesty API Key input", () => {
@@ -49,8 +49,8 @@ describe("ApiOptions Component", () => {
 	})
 })
 
-vi.mock("../../../context/ExtensionStateContext", async (importOriginal) => {
-	const actual = await importOriginal()
+vi.mock("../../../context/ExtensionStateContext", async () => {
+	const actual = await import("../../../context/ExtensionStateContext")
 	return {
 		...actual,
 		// your mocked methods
@@ -66,12 +66,12 @@ vi.mock("../../../context/ExtensionStateContext", async (importOriginal) => {
 	}
 })
 
-describe("ApiOptions Component", () => {
+describe("ApiOptions Component with Together API", () => {
 	vi.clearAllMocks()
 	const mockPostMessage = vi.fn()
 
 	beforeEach(() => {
-		global.vscode = { postMessage: mockPostMessage } as any
+		(global as any).vscode = { postMessage: mockPostMessage }
 	})
 
 	it("renders Together API Key input", () => {

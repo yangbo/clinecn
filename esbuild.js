@@ -62,6 +62,22 @@ const copyWasmFiles = {
 	},
 }
 
+// 替换扩展后端代码中的 IS_DEV = true 为 IS_DEV = false
+const replaceDevPlugin = (options) => ({
+	name: 'replace-dev',
+	setup(build) {
+	  build.onLoad({ filter: /\.ts$/ }, async (args) => {
+		let contents = await fs.promises.readFile(args.path, 'utf8');
+		const dev_regexp = /IS_DEV *= *true/g;
+		if (contents.match(dev_regexp)) {
+			contents = contents.replace(dev_regexp, 'IS_DEV = false');
+			console.log(`替换了 ${args.path} 中的 IS_DEV = true`);
+		}
+		return { contents, loader: 'ts' };
+	  });
+	},
+  });
+
 const extensionConfig = {
 	bundle: true,
 	minify: production,
@@ -78,6 +94,7 @@ const extensionConfig = {
 	platform: "node",
 	outfile: "dist/extension.js",
 	external: ["vscode"],
+	plugins: [replaceDevPlugin({ version: '1.0.0' })],
 }
 
 async function main() {

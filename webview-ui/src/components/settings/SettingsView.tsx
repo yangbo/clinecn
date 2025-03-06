@@ -5,7 +5,9 @@ import { validateApiConfiguration, validateModelId } from "../../utils/validate"
 import { vscode } from "../../utils/vscode"
 import ApiOptions from "./ApiOptions"
 import SettingsButton from "../common/SettingsButton"
-const IS_DEV = true // FIXME: use flags when packaging
+
+// 使用 vite 的 内置常量，由 NODE_ENV='development' 决定
+const IS_DEV = import.meta.env.DEV
 
 type SettingsViewProps = {
 	onDone: () => void

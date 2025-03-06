@@ -310,21 +310,18 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 		// then convert it to a uri we can use in the webview.
 
 		// The CSS file from the React build output
-		const stylesUri = getUri(webview, this.context.extensionUri, ["webview-ui", "build", "static", "css", "main.css"])
+		const stylesUri = getUri(webview, this.context.extensionUri, ["webview-ui", "build", "assets", "index.css"])
 		// The JS file from the React build output
-		const scriptUri = getUri(webview, this.context.extensionUri, ["webview-ui", "build", "static", "js", "main.js"])
+		const scriptUri = getUri(webview, this.context.extensionUri, ["webview-ui", "build", "assets", "index.js"])
 
 		// The codicon font from the React build output
 		// https://github.com/microsoft/vscode-extension-samples/blob/main/webview-codicons-sample/src/extension.ts
-		// we installed this package in the extension so that we can access it how its intended from the extension (the font file is likely bundled in vscode), and we just import the css fileinto our react app we don't have access to it
+		// we installed this package in the extension so that we can access it how its intended from 
+		// the extension (the font file is likely bundled in vscode), and we just import the css file into our 
+		// react app we don't have access to it
 		// don't forget to add font-src ${webview.cspSource};
-		const codiconsUri = getUri(webview, this.context.extensionUri, [
-			"node_modules",
-			"@vscode",
-			"codicons",
-			"dist",
-			"codicon.css",
-		])
+		const codiconsUri = getUri(webview, this.context.extensionUri, 
+			["node_modules", "@vscode", "codicons", "dist", "codicon.css" ])
 
 		// const scriptUri = webview.asWebviewUri(vscode.Uri.joinPath(this._extensionUri, "assets", "main.js"))
 
@@ -346,9 +343,9 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 		in meta tag we add nonce attribute: A cryptographic nonce (only used once) to allow scripts. The server must generate a unique nonce value each time it transmits a policy. It is critical to provide a nonce that cannot be guessed as bypassing a resource's policy is otherwise trivial.
 		*/
 		const nonce = getNonce()
-
-		const DEBUG = true;
-		if (DEBUG) {
+		// 打包时会将 IS_DEV = true 替换为 IS_DEV = false
+		const IS_DEV = true;
+		if (IS_DEV) {
 			// 用 iframe 模式装载 react app，但这样就不能往 vscode 发送消息了
 			const htmlUri = "http://localhost:3000/";
 			// 用 iframe 方法访问
@@ -356,7 +353,12 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 			<!DOCTYPE html>
 			<html>
 			<head>
-			  <title>Webview 主页面</title>
+			  <title>Debug 模式的 Webview 主页面</title>
+			  <meta charset="utf-8">
+			  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+			  <meta name="theme-color" content="#000000">
+			  <link rel="stylesheet" type="text/css" href="${htmlUri}/src/index.css">
+			  <link href="${htmlUri}/node_modules/codicons/dist/codicon.css" rel="stylesheet" />
 			  <style>
 				html, body {
 				  height: 100%; /* 确保父容器占据整个视口高度 */
@@ -371,9 +373,9 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 			  </style>
 			</head>
 			<body>
+			<h1>Debug2</h1>
 			  <iframe id="myIframe" src="${htmlUri}" width="100%" height="100%"></iframe> 
 			  <script>
-				
 				// 创建 main frame 和 iframe 之间的 Message Channel，用来实现 WebView.postMessage()、getState()和setState() 函数代理
 				const channelPostMessage = new MessageChannel();
 				const channelSetState = new MessageChannel();
@@ -458,6 +460,13 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 				  });
 				}
 				sendVscodeCssVariablesToIframe(iframe);
+
+				// 将收到的 message 传递给 iframe
+				window.addEventListener('message', event => {
+					console.log("将收到的 message 传递给 iframe：");
+					console.log(event);
+					iframe.contentWindow.postMessage(event.data, '*');
+				});
 			  </script>
 			</body>
 			</html>
@@ -917,7 +926,7 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 						const settingsFilter = message.text || ""
 						await vscode.commands.executeCommand(
 							"workbench.action.openSettings",
-							`@ext:clinecn ${settingsFilter}`.trim(), // trim whitespace if no settings filter
+							`@ext:terawincn.clinecn ${settingsFilter}`.trim(), // trim whitespace if no settings filter
 						)
 						break
 					}

@@ -68,7 +68,7 @@ const AppContent = () => {
 	}, [shouldShowAnnouncement])
 
 	if (!didHydrateState) {
-		return null
+		return (<div>初始化失败，请在"vscode 扩展开发宿主"中打开本扩展进行调试。</div>)
 	}
 
 	return (
