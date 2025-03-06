@@ -3,9 +3,10 @@
 [![Version](https://img.shields.io/visual-studio-marketplace/v/TeraWinCN.clinecn)](https://marketplace.visualstudio.com/items?itemName=TeraWinCN.clinecn)
 [![Downloads](https://img.shields.io/visual-studio-marketplace/d/TeraWinCN.clinecn)](https://marketplace.visualstudio.com/items?itemName=TeraWinCN.clinecn)
 [![Rating](https://img.shields.io/visual-studio-marketplace/r/TeraWinCN.clinecn)](https://marketplace.visualstudio.com/items?itemName=TeraWinCN.clinecn)
+
 ## 项目地址
-https://gitee.com/terawin/clinecn
-欢迎大家star，fork，提出issue，贡献代码，一起完善这个项目。
+
+本项目地址是 <https://gitee.com/terawin/clinecn>，欢迎大家star，fork，提出issue，贡献代码，一起完善这个项目。
 
 ## 简介
 
@@ -60,6 +61,7 @@ ClineCN 已发布到VSCode插件市场，欢迎感兴趣的小伙伴们下载体
 5. **更新和维护**：
    - 开发者将努力维护本项目，但不保证及时更新或修复所有问题。
    - 本项目可能随时变更或终止，会及时同步到本项目中。
+
 ---
 
 > 注：本项目与原版 Cline 团队无关。如果您喜欢这个项目，也请给原版 [Cline](https://github.com/cline/cline) 一个 star ⭐️
