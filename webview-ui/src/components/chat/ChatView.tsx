@@ -759,7 +759,10 @@ const ChatView = ({ isHidden, showAnnouncement, hideAnnouncement, showHistoryVie
 					}}>
 					{showAnnouncement && <Announcement version={version} hideAnnouncement={hideAnnouncement} />}
 					<div style={{ padding: "0 20px", flexShrink: 0 }}>
-						<h2>我能为你做些什么？</h2>
+						<h2>我是您的AI编程助理，我很聪明，从此编程难活、累活都交给我吧</h2>
+						<p>您只需用“先计划、后执行”的方式和我交互，就可以实现复杂的编程任务。</p>
+						<p>我可以自动创建和编辑文件、探索复杂项目、使用浏览器和执行终端命令等工具，这些操作都会获得您的许可。</p>
+						<p>我甚至可以使用“模型上下文协议（MCP）”来创建新工具，扩展出新能力。</p>
 						<p>
 							感谢{" "}
 							<VSCodeLink
@@ -771,13 +774,17 @@ const ChatView = ({ isHidden, showAnnouncement, hideAnnouncement, showHistoryVie
 						<p>
 							感谢{" "}
 							<VSCodeLink
-								href="https://www-cdn.anthropic.com/fed9cc193a14b84131812372d8d5857f8f304c52/Model_Card_Claude_3_Addendum.pdf"
+								href="https://www.anthropic.com"
 								style={{ display: "inline" }}>
-								Claude 3.5 Sonnet 的代理编码能力
-							</VSCodeLink>{" "}
-							，我可以一步步处理复杂的软件开发任务。通过创建和编辑文件、探索复杂项目、使用浏览器和执行终端命令（授权后）等工具，我可以提供超越代码补全或技术支持的帮助。我甚至可以使用
-							“模型上下文协议（MCP）”来创建新工具，扩展能力。
+								Anthropic
+							</VSCodeLink>{" "} 开发了 Claud Sonet 大模型，还开源了 Cline 项目。
 						</p>
+						<p>本 vscode 扩展就是基于 
+							<VSCodeLink
+								href="https://github.com/cline/cline"
+								style={{ display: "inline" }}>
+								Cline
+							</VSCodeLink> 开发的。</p>
 					</div>
 					{taskHistory.length > 0 && <HistoryPreview showHistoryView={showHistoryView} />}
 				</div>
