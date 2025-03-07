@@ -100,7 +100,7 @@ class CheckpointTracker {
 			// Make sure it's the same cwd as the configured worktree
 			const worktree = await this.getShadowGitConfigWorkTree()
 			if (worktree !== this.cwd) {
-				throw new Error("Checkpoints can only be used in the original workspace: " + worktree)
+				throw new Error("检查点只能在原工作空间中使用，原工作空间是: " + worktree)
 			}
 
 			return gitPath
