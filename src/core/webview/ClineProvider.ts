@@ -355,7 +355,7 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 			<head>
 			  <title>Debug 模式的 Webview 主页面</title>
 			  <meta charset="utf-8">
-			  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+			  <meta name="viewport" content="height=device-height,width=device-width,initial-scale=1,shrink-to-fit=no">
 			  <meta name="theme-color" content="#000000">
 			  <link rel="stylesheet" type="text/css" href="${htmlUri}/src/index.css">
 			  <link href="${htmlUri}/node_modules/codicons/dist/codicon.css" rel="stylesheet" />
@@ -364,6 +364,8 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 				  height: 100%; /* 确保父容器占据整个视口高度 */
 				  margin: 0;
 				  padding: 0;
+				  border: none;
+				  overflow-y: hidden; /* 隐藏容器的滚动条 */
 				}
 				iframe {
 				  width: 100%;
@@ -373,8 +375,7 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 			  </style>
 			</head>
 			<body>
-			<h1>Debug2</h1>
-			  <iframe id="myIframe" src="${htmlUri}" width="100%" height="100%"></iframe> 
+			  <iframe id="myIframe" src="${htmlUri}" width="100%" height="100%" scrolling="no"></iframe> 
 			  <script>
 				// 创建 main frame 和 iframe 之间的 Message Channel，用来实现 WebView.postMessage()、getState()和setState() 函数代理
 				const channelPostMessage = new MessageChannel();
