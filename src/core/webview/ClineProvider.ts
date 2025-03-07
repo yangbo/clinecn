@@ -357,8 +357,6 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 			  <meta charset="utf-8">
 			  <meta name="viewport" content="height=device-height,width=device-width,initial-scale=1,shrink-to-fit=no">
 			  <meta name="theme-color" content="#000000">
-			  <link rel="stylesheet" type="text/css" href="${htmlUri}/src/index.css">
-			  <link href="${htmlUri}/node_modules/codicons/dist/codicon.css" rel="stylesheet" />
 			  <style>
 				html, body {
 				  height: 100%; /* 确保父容器占据整个视口高度 */

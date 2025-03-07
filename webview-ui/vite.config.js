@@ -7,10 +7,16 @@ import react from "@vitejs/plugin-react";
 /** @type {import('vite').UserConfig} */
 export default defineConfig({
 	plugins: [react()],
+	base: '/',
 	server: {
 		port: 3000,
 		cors: {
-			origin: "*", // 允许所有域访问本资源
+			// 允许所有域访问本资源
+			origin: "*",
+		},
+		fs: {
+			// 解决 codicon.tff 访问 404 问题
+			strict: false
 		}
 	},
 	build: {

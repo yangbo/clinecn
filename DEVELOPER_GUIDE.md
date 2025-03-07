@@ -70,3 +70,13 @@
 
 ### 如何将 vscode 自动生成的 styles 复制到 iframe 中
 
+答：用 postMessage 的方式发送到 iframe 中去，并动态创建样式。不能直接从父页面访问 iframe 的 document，因为父页面的 src 和 iframe 的 src 不同源。
+
+### 解决 codicon 图标在 webview 中不显示的问题
+
+答：这是因为 vite 的资源引用将 css 作为绝对地址引用了，导致访问 ttf 文件时也用的绝对地址，而 vite server 又不允许提供超出项目目录的文件访问。
+
+访问 ttf 失败的错误信息如下：
+```js
+GET http://localhost:3000/@fs/E:/lab/nodejs/clinecn/node_modules/@vscode/codicons/dist/codicon.ttf?38dcd33a732ebca5a557e04831e9e235 net::ERR_ABORTED 403 (Forbidden)
+```

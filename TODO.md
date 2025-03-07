@@ -97,3 +97,5 @@ Copilot 的“解释”功能比较聪明，它会只截取选中的文本，或
 ```js
 Wa: Unable to read file 'e:\lab\nodejs\clinecn\webview-ui\build\static\css\main.css' (Error: Unable to resolve nonexistent file 'e:\lab\nodejs\clinecn\webview-ui\build\static\css\main.css')
 ```
+
+解决办法：将对 css 的引用放到 iframe 中去，用相对路径即可访问。
