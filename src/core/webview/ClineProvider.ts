@@ -373,7 +373,9 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 			  </style>
 			</head>
 			<body>
-			  <iframe id="myIframe" src="${htmlUri}" width="100%" height="100%" scrolling="no"></iframe> 
+			  <iframe id="myIframe" src="${htmlUri}" width="100%" height="100%" scrolling="no" 
+			  sandbox="allow-modals allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-orientation-lock allow-presentation allow-pointer-lock allow-same-origin allow-storage-access-by-user-activation allow-top-navigation allow-top-navigation-by-user-activation"
+			  allow="cross-origin-isolated; autoplay; clipboard-read; clipboard-write;"></iframe> 
 			  <script>
 				// 创建 main frame 和 iframe 之间的 Message Channel，用来实现 WebView.postMessage()、getState()和setState() 函数代理
 				const channelPostMessage = new MessageChannel();

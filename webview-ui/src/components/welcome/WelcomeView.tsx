@@ -61,6 +61,7 @@ const WelcomeView = () => {
 					感谢{" "}
 					<VSCodeLink
 						href="https://www.deepseek.com/"
+						target="_blank"
 						style={{ display: "inline" }}>
 						DeepSeek
 					</VSCodeLink>{" "}为我们带来了改变世界的一个开源大语言模型，让AI编程可以惠及每一个中国人。

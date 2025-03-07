@@ -197,9 +197,9 @@ const ApiOptions = ({ showModelOptions, apiErrorMessage, modelIdErrorMessage, is
 						minWidth: 130,
 						position: "relative",
 					}}>
+					<VSCodeOption value="deepseek">DeepSeek</VSCodeOption>
 					<VSCodeOption value="openai">OpenAI 兼容API</VSCodeOption>
 					<VSCodeOption value="qwen">阿里千问</VSCodeOption>
-					<VSCodeOption value="deepseek">DeepSeek</VSCodeOption>
 					<VSCodeOption value="openrouter">OpenRouter</VSCodeOption>
 					<VSCodeOption value="ollama">Ollama</VSCodeOption>
 					<VSCodeOption value="gemini">Google Gemini</VSCodeOption>
@@ -323,6 +323,7 @@ const ApiOptions = ({ showModelOptions, apiErrorMessage, modelIdErrorMessage, is
 						{!apiConfiguration?.deepSeekApiKey && (
 							<VSCodeLink
 								href="https://www.deepseek.com/"
+								target="_blank"
 								style={{
 									display: "inline",
 									fontSize: "inherit",
