@@ -137,5 +137,11 @@ export function mergeJson(
 }
 
 function getExtensionUri(): vscode.Uri {
-	return vscode.extensions.getExtension("cline")!.extensionUri
+	const id = "TeraWinCN.clinecn";
+	const ext = vscode.extensions.getExtension(id);
+	if (!ext) {
+		console.log(`找不到扩展：${id}`);
+		throw new Error(`找不到扩展：${id}`);
+	}
+	return ext.extensionUri;
 }

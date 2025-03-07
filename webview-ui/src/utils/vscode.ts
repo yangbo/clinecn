@@ -71,6 +71,16 @@ class VSCodeAPIProxy implements WebviewApi<unknown> {
         const combinedStyle = `${existingStyle}; ${vscodeStyles}`;
         htmlElement.setAttribute("style", combinedStyle);
       }
+      
+      // 响应来自主帧的 vscodeSetDefaultStyles 消息
+      if (event.data.type === 'vscodeSetDefaultStyles') {
+          console.log("[iframe] 收到 vscodeSetDefaultStyles 消息，创建<style></style>元素");
+					const newStyleElement = document.createElement('style');
+          const styleContent = event.data.styles;
+					newStyleElement.setAttribute('id', "_defaultStyles")
+					newStyleElement.textContent = styleContent;
+					document.head.appendChild(newStyleElement);
+      }
     });
   }
 

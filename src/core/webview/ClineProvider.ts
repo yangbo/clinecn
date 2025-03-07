@@ -468,6 +468,16 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 					console.log(event);
 					iframe.contentWindow.postMessage(event.data, '*');
 				});
+
+				// 复制动态添加的扩展样式到 iframe 去
+				iframe.addEventListener('load', () => {
+					console.log("复制 vscode extension 样式表到 iframe 去");
+					const styleElement = document.getElementById('_defaultStyles');
+					const styleContent = styleElement.textContent;
+					console.log(styleContent);
+					// 这里不能直接设置，要通过 postMessage 方式设置，在 webview-ui/vscode.ts 中响应
+					iframe.contentWindow.postMessage({ type: 'vscodeSetDefaultStyles', styles: styleContent }, '*');
+				});
 			  </script>
 			</body>
 			</html>

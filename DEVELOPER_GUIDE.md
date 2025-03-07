@@ -65,3 +65,8 @@
 ## 编辑图标
 
 使用 [boxy svg](https://boxy-svg.com/) 软件编辑图标。
+
+## 常见问题和解决方法
+
+### 如何将 vscode 自动生成的 styles 复制到 iframe 中
+
