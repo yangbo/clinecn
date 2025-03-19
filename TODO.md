@@ -99,3 +99,8 @@ Wa: Unable to read file 'e:\lab\nodejs\clinecn\webview-ui\build\static\css\main.
 ```
 
 解决办法：将对 css 的引用放到 iframe 中去，用相对路径即可访问。
+
+# 读取文件、写入文件时要考虑具体的文件 encoding
+
+要支持读取、写入不同的文件编码，比如 utf-8、gbk 等。可以按当前文件的编码进行读取、写入。
+或者指定一个编码，然后进行读取、写入。
