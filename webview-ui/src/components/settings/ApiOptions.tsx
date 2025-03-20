@@ -198,8 +198,8 @@ const ApiOptions = ({ showModelOptions, apiErrorMessage, modelIdErrorMessage, is
 						position: "relative",
 					}}>
 					<VSCodeOption value="deepseek">DeepSeek</VSCodeOption>
-					<VSCodeOption value="openai">OpenAI 兼容API</VSCodeOption>
 					<VSCodeOption value="qwen">阿里千问</VSCodeOption>
+					<VSCodeOption value="openai">新增供应商</VSCodeOption>
 					<VSCodeOption value="openrouter">OpenRouter</VSCodeOption>
 					<VSCodeOption value="ollama">Ollama</VSCodeOption>
 					<VSCodeOption value="gemini">Google Gemini</VSCodeOption>
@@ -1062,7 +1062,7 @@ const ApiOptions = ({ showModelOptions, apiErrorMessage, modelIdErrorMessage, is
 				</p>
 			)}
 
-			{isPopup && (
+			{!isPopup && (
 				<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
 					{selectedProvider === "openai" ? (
 						<VSCodeButton

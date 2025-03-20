@@ -759,7 +759,7 @@ const ChatView = ({ isHidden, showAnnouncement, hideAnnouncement, showHistoryVie
 					}}>
 					{showAnnouncement && <Announcement version={version} hideAnnouncement={hideAnnouncement} />}
 					<div style={{ padding: "0 20px", flexShrink: 0 }}>
-						<h2>我是您的AI编程助理，我很聪明，从此编程难活、累活都交给我吧</h2>
+						<h2>我是您的AI编程助理，我很聪明，从此编程中的各种累活、难活都交给我吧</h2>
 						<p>您只需用“先计划、后执行”的方式和我交互，就可以实现复杂的编程任务。</p>
 						<p>我可以自动创建和编辑文件、探索复杂项目、使用浏览器和执行终端命令等工具，这些操作都会获得您的许可。</p>
 						<p>我甚至可以使用“模型上下文协议（MCP）”来创建新工具，扩展出新能力。</p>

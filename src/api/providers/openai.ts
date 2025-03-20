@@ -7,6 +7,9 @@ import { convertToOpenAiMessages } from "../transform/openai-format"
 import { ApiStream } from "../transform/stream"
 import { convertToR1Format } from "../transform/r1-format"
 
+/**
+ * OpenAI 兼容的模型之处理程序
+ */
 export class OpenAiHandler implements ApiHandler {
 	private options: ApiHandlerOptions
 	private client: OpenAI
