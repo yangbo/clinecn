@@ -182,7 +182,8 @@ export class AdvanceDebugger {
                     }
                 } else if (event.data.type === 'toggle-theme') {
                     console.log("切换主题到: ", event.data.theme);
-                    // 当 debug 过程中切换主题颜色时，扩展会发送 'toggle-theme' 消息，webview html 页面需要接收并处理
+                    // 当 debug 过程中切换主题颜色时，扩展会发送 'toggle-theme' 消息给 webview html 页面
+                    // 这时 webview html 父页面需要将样式拷贝到 iframe 中去
                     sendVscodeCssVariablesToIframe();
                     copyDefaultStyles();
                     // 继续转给 iframe
