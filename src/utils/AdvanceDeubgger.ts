@@ -8,7 +8,8 @@ import * as vscode from 'vscode';
 export class AdvanceDebugger {
 
     /**
-     * 初始化 webview-ui-toolkit 调试工具，实现“高级调试”功能
+     * 初始化 webview-ui-toolkit 调试工具，实现“高级调试”功能。
+     * 每一个创建的 webview 都需要调用一次。
      */
     static initWebview(webview: vscode.Webview) {
         // 打包时会将 IS_DEV = true 替换为 IS_DEV = false
