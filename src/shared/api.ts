@@ -15,6 +15,7 @@ export type ApiProvider =
 	| "mistral"
 	| "vscode-lm"
 	| "litellm"
+	| `custom-provider-${string}`	// 表示以 'custom-provider-' 开头的字符串，是由用户输入的提供商 id 组成，例如用户输入的提供商 id 为 'foo'，则该值为 'custom-provider-foo'
 
 export interface ApiHandlerOptions {
 	apiModelId?: string
@@ -34,9 +35,9 @@ export interface ApiHandlerOptions {
 	awsProfile?: string
 	vertexProjectId?: string
 	vertexRegion?: string
-	openAiBaseUrl?: string
-	openAiApiKey?: string
-	openAiModelId?: string
+	openAiBaseUrl?: string		// 废弃，用自定义提供商替代
+	openAiApiKey?: string		// 废弃，用自定义提供商替代
+	openAiModelId?: string		// 废弃，用自定义提供商替代
 	ollamaModelId?: string
 	ollamaBaseUrl?: string
 	lmStudioModelId?: string
@@ -54,6 +55,17 @@ export interface ApiHandlerOptions {
 	vsCodeLmModelSelector?: any
 	o3MiniReasoningEffort?: string
 	qwenApiLine?: string
+	customProviderMap?: Record<ApiProvider, CustomProvider>
+}
+
+// 自定义AI供应商
+export type CustomProvider = {
+	baseUrl: string							// 供应商的基础url
+	apiKey: string							// 供应商的 api key
+	apiVersion: string						// api版本，可用于 Azure OpenAI API
+	planModelId: string						// 当前选中的计划模式的模型id
+	actModelId: string						// 当前选中的执行模式的模型id
+	modelMap: Record<string, ModelInfo>		// 供应商的模型字典
 }
 
 export type ApiConfiguration = ApiHandlerOptions & {
@@ -89,6 +101,8 @@ export interface ModelInfo {
 	description?: string,
 	// 货币,可以是 "USD", "CNY" 等，默认是 "USD"
 	currency?: string
+	// 是否为 deepseek-r1 模型，会影响生成消息的模式，参考 openai.ts 中的 createMessage() 方法
+	isDeepseekReasoner?: boolean
 }
 
 // Anthropic

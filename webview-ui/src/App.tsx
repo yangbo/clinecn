@@ -9,6 +9,7 @@ import AccountView from "./components/account/AccountView"
 import { ExtensionStateContextProvider, useExtensionState } from "./context/ExtensionStateContext"
 import { vscode } from "./utils/vscode"
 import McpView from "./components/mcp/McpView"
+import { VSCodeButton } from "@vscode/webview-ui-toolkit/react"
 
 const AppContent = () => {
 	const { didHydrateState, showWelcome, shouldShowAnnouncement } = useExtensionState()
@@ -68,7 +69,20 @@ const AppContent = () => {
 	}, [shouldShowAnnouncement])
 
 	if (!didHydrateState) {
-		return (<div>初始化失败，请在"vscode 扩展开发宿主"中打开本扩展进行调试。<br/>或按 Control+R 重启扩展。</div>)
+		// 在开发模式下，如果 webview 因为页面编译失败、刷新，则需要主动通知扩展宿主重新发送状态
+		vscode.postMessage({ type: "webviewDidLaunch" })
+		console.log("[iframe] 初始化失败，重新 postMessage(webviewDidLaunch)")
+		return (
+			<>
+				<div>初始化失败，请在"vscode 扩展开发宿主"中打开本扩展进行调试。<br />或按 Control+R 重启扩展。</div>
+				<VSCodeButton onClick={
+					() => {
+						console.log("[iframe] 刷新，重新 postMessage(webviewDidLaunch)")
+						vscode.postMessage({ type: "webviewDidLaunch" })
+					}
+				}>刷新</VSCodeButton>
+			</>
+		)
 	}
 
 	return (

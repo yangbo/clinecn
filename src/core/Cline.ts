@@ -87,6 +87,7 @@ export class Cline {
 	private lastMessageTs?: number
 	private consecutiveAutoApprovedRequestsCount: number = 0
 	private consecutiveMistakeCount: number = 0
+	// 使用 WeakRef 打破循环引用，因为 ClineProvider.cline 也指向本对象，形成了循环引用
 	private providerRef: WeakRef<ClineProvider>
 	private abort: boolean = false
 	didFinishAbortingStream = false

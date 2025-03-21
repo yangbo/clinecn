@@ -15,7 +15,7 @@ import { getTheme } from "../../integrations/theme/getTheme"
 import WorkspaceTracker from "../../integrations/workspace/WorkspaceTracker"
 import { McpHub } from "../../services/mcp/McpHub"
 import { FirebaseAuthManager, UserInfo } from "../../services/auth/FirebaseAuthManager"
-import { ApiProvider, ModelInfo } from "../../shared/api"
+import { ApiProvider, CustomProvider, ModelInfo } from "../../shared/api"
 import { findLast } from "../../shared/array"
 import { ExtensionMessage, ExtensionState, Platform } from "../../shared/ExtensionMessage"
 import { HistoryItem } from "../../shared/HistoryItem"
@@ -28,6 +28,7 @@ import { getUri } from "./getUri"
 import { AutoApprovalSettings, DEFAULT_AUTO_APPROVAL_SETTINGS } from "../../shared/AutoApprovalSettings"
 import { BrowserSettings, DEFAULT_BROWSER_SETTINGS } from "../../shared/BrowserSettings"
 import { ChatSettings, DEFAULT_CHAT_SETTINGS } from "../../shared/ChatSettings"
+import { custom } from "zod"
 
 /*
 https://github.com/microsoft/vscode-webview-ui-toolkit-samples/blob/main/default/weather-webview/src/providers/WeatherViewProvider.ts
@@ -35,6 +36,9 @@ https://github.com/microsoft/vscode-webview-ui-toolkit-samples/blob/main/default
 https://github.com/KumarVariable/vscode-extension-sidebar-html/blob/master/src/customSidebarViewProvider.ts
 */
 
+// About the Custom Providers:
+// - we store the list of custom providers in the secret-store
+// - the 'apiProvider'
 type SecretKey =
 	| "apiKey"
 	| "openRouterApiKey"
@@ -51,6 +55,8 @@ type SecretKey =
 	| "mistralApiKey"
 	| "authToken"
 	| "authNonce"
+	| "customProviderMap"		// 自定义厂商字典，包括他们的 apiKey、baseUrl、模型信息等，放入 ApiHandlerOptions.customProviderMap 字段
+
 type GlobalStateKey =
 	| "apiProvider"
 	| "apiModelId"
@@ -96,7 +102,9 @@ export const GlobalFileNames = {
 }
 
 export class ClineProvider implements vscode.WebviewViewProvider {
-	public static readonly sideBarId = "clinecn.SidebarProvider" // used in package.json as the view's id. This value cannot be changed due to how vscode caches views based on their id, and updating the id would break existing instances of the extension.
+	// used in package.json as the view's id. This value cannot be changed due to how vscode caches views based on their id, 
+	// and updating the id would break existing instances of the extension.
+	public static readonly sideBarId = "clinecn.SidebarProvider"
 	public static readonly tabPanelId = "clinecn.TabPanelProvider"
 	// 会有多个实例，比如 tabBar 对应一个 ClineProvider、sidebar 对应一个 ClineProvider
 	private static activeInstances: Set<ClineProvider> = new Set()
@@ -106,7 +114,8 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 	workspaceTracker?: WorkspaceTracker
 	mcpHub?: McpHub
 	private authManager: FirebaseAuthManager
-	private latestAnnouncementId = "jan-20-2025" // update to some unique identifier when we add a new announcement
+	// update to some unique identifier when we add a new announcement
+	private latestAnnouncementId = "jan-20-2025"
 
 	constructor(
 		readonly context: vscode.ExtensionContext,
@@ -378,58 +387,64 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 			  allow="cross-origin-isolated; autoplay; clipboard-read; clipboard-write;"></iframe> 
 			  <script>
 				// 创建 main frame 和 iframe 之间的 Message Channel，用来实现 WebView.postMessage()、getState()和setState() 函数代理
-				const channelPostMessage = new MessageChannel();
-				const channelSetState = new MessageChannel();
-				const channelGetState = new MessageChannel();
+				let channelPostMessage;
+				let channelSetState;
+				let channelGetState;
 			
 				/**
 				 * 创建 main frame 和 iframe 之间的 Message Channel，
-				 * 实现 WebView.postMessage() 函数代理
+				 * 实现 WebView.postMessage() 函数代理。
+				 * 要在 iframe 装载(onload)之后调用才行。
 				 */
 				function proxyVscode(iframe, vscode){
-				  // 在 iframe onloaded 事件时再发送 vscode api 到 iframe
-				  iframe.onload = function() {
-					// 代理 vscode.postMesssage() 函数
-					console.log("[main frame] 创建消息通道，实现 postMessage 函数代理");
-					iframe.contentWindow.postMessage({
-						command: 'createChannel',
-						api: "postMessage"
-					}, '*', [channelPostMessage.port2]);
-					// 侦听通道收到的消息
-					channelPostMessage.port1.onmessage = function(event) {
-					  console.log("[main frame] 收到 iframe postMessage 消息: ");
-					  console.log(event.data);
-					  vscode.postMessage(event.data);
-					};
-			
-					// 代理 vscode.getState() 函数
-					console.log("[main frame] 创建消息通道，实现 getState 函数代理");
-					iframe.contentWindow.postMessage({
-						command: 'createChannel',
-						api: "getState"
-					}, '*', [channelGetState.port2]);
-					// 侦听通道收到的消息
-					channelGetState.port1.onmessage = function(event) {
-					  console.log("[main frame] 收到 iframe getState 消息: ");
-					  console.log(event.data);
-					  const state = vscode.getState();
-					  // 发送 getState() 结果到 iframe
-					  channelGetState.port1.postMessage(state);
-					}
-			
-					// 代理 vscode.setState() 函数
-					console.log("[main frame] 创建消息通道，实现 setState 函数代理");
-					iframe.contentWindow.postMessage({
-						command: 'createChannel',
-						api: "setState"
-					}, '*', [channelSetState.port2]);
-					// 侦听通道收到的消息
-					channelSetState.port1.onmessage = function(event) {
-					  console.log("[main frame] 收到 iframe setState 消息: ");
-					  console.log(event.data);
-					  const state = vscode.setState(event.data);
-					}
-				  }
+					console.log("[main frame] 执行 proxyVscode()");
+					channelPostMessage = new MessageChannel();
+					channelSetState = new MessageChannel();
+					channelGetState = new MessageChannel();
+
+					// 在 iframe onloaded 事件时再发送 vscode api 到 iframe
+					// iframe.onload = function() {
+						// 代理 vscode.postMesssage() 函数
+						console.log("[main frame] 创建消息通道，实现 postMessage 函数代理");
+						iframe.contentWindow.postMessage({
+							command: 'createChannel',
+							api: "postMessage"
+						}, '*', [channelPostMessage.port2]);
+						// 侦听通道收到的消息
+						channelPostMessage.port1.onmessage = function(event) {
+							console.log("[main frame] 收到 iframe postMessage 消息: ");
+							console.log(event.data);
+							vscode.postMessage(event.data);
+						};
+				
+						// 代理 vscode.getState() 函数
+						console.log("[main frame] 创建消息通道，实现 getState 函数代理");
+						iframe.contentWindow.postMessage({
+							command: 'createChannel',
+							api: "getState"
+						}, '*', [channelGetState.port2]);
+						// 侦听通道收到的消息
+						channelGetState.port1.onmessage = function(event) {
+							console.log("[main frame] 收到 iframe getState 消息: ");
+							console.log(event.data);
+							const state = vscode.getState();
+							// 发送 getState() 结果到 iframe
+							channelGetState.port1.postMessage(state);
+						}
+				
+						// 代理 vscode.setState() 函数
+						console.log("[main frame] 创建消息通道，实现 setState 函数代理");
+						iframe.contentWindow.postMessage({
+							command: 'createChannel',
+							api: "setState"
+						}, '*', [channelSetState.port2]);
+						// 侦听通道收到的消息
+						channelSetState.port1.onmessage = function(event) {
+							console.log("[main frame] 收到 iframe setState 消息: ");
+							console.log(event.data);
+							const state = vscode.setState(event.data);
+						}
+					// }
 				}
 			
 				// 还没有获取过 vscode api，需要获取
@@ -442,11 +457,7 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 				  console.log("[main frame] window.vsCodeApi 已经存在，不需要重新获取:");
 				  console.log(window.vsCodeApi);
 				}
-				// 准备接收 iframe 的 vscode api 消息
 				const iframe = document.getElementById('myIframe');
-				if (window.vsCodeApi) {
-				  proxyVscode(iframe, window.vsCodeApi);
-				}
 			
 				// 传递 vscode 的 css 样式
 				function sendVscodeCssVariablesToIframe(iframe) {
@@ -456,28 +467,41 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 				  const inlineStyle = htmlElement.getAttribute("style") || "";
 			
 				  iframe.addEventListener('load', () => {
-					console.log("发送 vscode css 变量到 iframe");
+					console.log("[main frame] 发送 vscode css 变量到 iframe");
 					iframe.contentWindow.postMessage({ type: 'vscodeInlineStyles', styles: inlineStyle }, '*');
 				  });
 				}
 				sendVscodeCssVariablesToIframe(iframe);
 
-				// 将收到的 message 传递给 iframe
-				window.addEventListener('message', event => {
-					console.log("将收到的 message 传递给 iframe：");
-					console.log(event);
-					iframe.contentWindow.postMessage(event.data, '*');
-				});
+				// 将收到的 message 传递给 iframe,或者拦截并处理
+				const onMessage = event => {
+					// 拦截 iframe 发送的 'iframe-loaded' 消息
+					if (event.data === 'iframe-loaded') {
+						console.log("[main frame] iframe 加载完成，开始初始化 proxy 工作");
+						if (window.vsCodeApi) {
+							// 准备接收 iframe 的 vscode api 消息
+				  			proxyVscode(iframe, window.vsCodeApi);
+						}
+					} else {
+						console.log("[main frame] 将收到的 message 传递给 iframe：");
+						console.log(event);
+						iframe.contentWindow.postMessage(event.data, '*');
+					}
+				};
+				window.removeEventListener('message', onMessage);		// 支持重新执行
+				window.addEventListener('message', onMessage);
 
 				// 复制动态添加的扩展样式到 iframe 去
-				iframe.addEventListener('load', () => {
-					console.log("复制 vscode extension 样式表到 iframe 去");
+				const onLoad = () => {
+					console.log("[main frame] 复制 vscode extension 样式表到 iframe 去");
 					const styleElement = document.getElementById('_defaultStyles');
 					const styleContent = styleElement.textContent;
-					console.log(styleContent);
+					// console.log(styleContent);
 					// 这里不能直接设置，要通过 postMessage 方式设置，在 webview-ui/vscode.ts 中响应
 					iframe.contentWindow.postMessage({ type: 'vscodeSetDefaultStyles', styles: styleContent }, '*');
-				});
+				};
+				iframe.removeEventListener('load', onLoad);		// 支持重新执行
+				iframe.addEventListener('load', onLoad);
 			  </script>
 			</body>
 			</html>
@@ -602,6 +626,7 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 								liteLlmBaseUrl,
 								liteLlmModelId,
 								qwenApiLine,
+								customProviderMap
 							} = message.apiConfiguration
 							await this.updateGlobalState("apiProvider", apiProvider)
 							await this.updateGlobalState("apiModelId", apiModelId)
@@ -640,6 +665,7 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 							await this.updateGlobalState("qwenApiLine", qwenApiLine)
 							await this.updateGlobalState("requestyModelId", requestyModelId)
 							await this.updateGlobalState("togetherModelId", togetherModelId)
+							await this.storeSecretObject("customProviderMap", customProviderMap)
 							if (this.cline) {
 								this.cline.api = buildApiHandler(message.apiConfiguration)
 							}
@@ -1555,6 +1581,7 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 			previousModeModelId,
 			previousModeModelInfo,
 			qwenApiLine,
+			customProviderMap
 		] = await Promise.all([
 			this.getGlobalState("apiProvider") as Promise<ApiProvider | undefined>,
 			this.getGlobalState("apiModelId") as Promise<string | undefined>,
@@ -1604,20 +1631,15 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 			this.getGlobalState("previousModeModelId") as Promise<string | undefined>,
 			this.getGlobalState("previousModeModelInfo") as Promise<ModelInfo | undefined>,
 			this.getGlobalState("qwenApiLine") as Promise<string | undefined>,
+			this.getSecretObject("customProviderMap") as Promise<Record<ApiProvider, CustomProvider> | undefined>,
 		])
 
 		let apiProvider: ApiProvider
 		if (storedApiProvider) {
 			apiProvider = storedApiProvider
 		} else {
-			// Either new user or legacy user that doesn't have the apiProvider stored in state
-			// (If they're using OpenRouter or Bedrock, then apiProvider state will exist)
-			if (apiKey) {
-				apiProvider = "anthropic"
-			} else {
-				// New users should default to openrouter
-				apiProvider = "openrouter"
-			}
+			// 默认使用千问模型
+			apiProvider = "qwen"
 		}
 
 		const o3MiniReasoningEffort = vscode.workspace
@@ -1664,6 +1686,7 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 				o3MiniReasoningEffort,
 				liteLlmBaseUrl,
 				liteLlmModelId,
+				customProviderMap
 			},
 			lastShownAnnouncementId,
 			customInstructions,
@@ -1731,8 +1754,26 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 		}
 	}
 
+	// 将 value 转为 json string 后存入
+	private async storeSecretObject(key: SecretKey, value?: any) {
+		if (value) {
+			await this.context.secrets.store(key, JSON.stringify(value))
+		} else {
+			await this.context.secrets.delete(key)
+		}
+	}
+
 	async getSecret(key: SecretKey) {
 		return await this.context.secrets.get(key)
+	}
+
+	// 从 secret 读取 json string 并转为对象
+	async getSecretObject(key: SecretKey) {
+		const str =  await this.context.secrets.get(key)
+		if (str) {
+			return JSON.parse(str)
+		}
+		return undefined
 	}
 
 	// dev

@@ -13,6 +13,11 @@ class VSCodeAPIProxy implements WebviewApi<unknown> {
   private setStateResolve: ((value: any) => void) | undefined;
 
   constructor() {
+    // iframe 装载页面后就给父窗口发送消息
+    window.onload = () => {
+      console.log("[iframe] 发送 'iframe-loaded' 消息给父窗口");
+      window.parent.postMessage('iframe-loaded', '*');
+    }
     // 侦听来自父窗口的通道创建消息
     window.addEventListener('message', event => {
       const message = event.data;
@@ -66,7 +71,7 @@ class VSCodeAPIProxy implements WebviewApi<unknown> {
         const htmlElement = document.documentElement;
         const vscodeStyles = event.data.styles;
         console.log("[iframe] 收到 vscodeInlineStyles 消息: ");
-        console.log(vscodeStyles);
+        // console.log(vscodeStyles);
         const existingStyle = htmlElement.getAttribute("style") || "";
         const combinedStyle = `${existingStyle}; ${vscodeStyles}`;
         htmlElement.setAttribute("style", combinedStyle);

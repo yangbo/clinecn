@@ -178,43 +178,60 @@ const ApiOptions = ({ showModelOptions, apiErrorMessage, modelIdErrorMessage, is
 				<label htmlFor="api-provider">
 					<span style={{ fontWeight: 500 }}>API供应商</span>
 				</label>
+				<div style={{ display: "flex", gap: 5 }}>
 
-				<VSCodeDropdown
-					id="api-provider"
-					value={selectedProvider}
-					onChange={(event) => {
-						const target = event.target as HTMLSelectElement;
-						const newValue = target.value;
-						setSelectedProvider(newValue);
-						if (newValue !== "openai" && newValue !== "") {
-							setDynamicProvider(newValue);
-						} else {
-							setDynamicProvider("");
-						}
-						handleInputChange("apiProvider")(event);
-					}}
-					style={{
-						minWidth: 130,
-						position: "relative",
-					}}>
-					<VSCodeOption value="deepseek">DeepSeek</VSCodeOption>
-					<VSCodeOption value="qwen">阿里千问</VSCodeOption>
-					<VSCodeOption value="openai">新增供应商</VSCodeOption>
-					<VSCodeOption value="openrouter">OpenRouter</VSCodeOption>
-					<VSCodeOption value="ollama">Ollama</VSCodeOption>
-					<VSCodeOption value="gemini">Google Gemini</VSCodeOption>
-					<VSCodeOption value="anthropic">Anthropic</VSCodeOption>
-					<VSCodeOption value="openai-native">OpenAI</VSCodeOption>
-					<VSCodeOption value="vscode-lm">VS Code LM API</VSCodeOption>
-					<VSCodeOption value="bedrock">AWS Bedrock</VSCodeOption>
-					<VSCodeOption value="vertex">GCP Vertex AI</VSCodeOption>
-					<VSCodeOption value="mistral">Mistral</VSCodeOption>
-					<VSCodeOption value="requesty">Requesty</VSCodeOption>
-					<VSCodeOption value="together">Together</VSCodeOption>
-					<VSCodeOption value="lmstudio">LM Studio</VSCodeOption>
-					<VSCodeOption value="litellm">LiteLLM</VSCodeOption>
-				</VSCodeDropdown>
+					<VSCodeDropdown
+						id="api-provider"
+						value={selectedProvider}
+						onChange={(event) => {
+							const target = event.target as HTMLSelectElement;
+							const newValue = target.value;
+							setSelectedProvider(newValue);
+							if (newValue !== "openai" && newValue !== "") {
+								setDynamicProvider(newValue);
+							} else {
+								setDynamicProvider("");
+							}
+							handleInputChange("apiProvider")(event);
+						}}
+						style={{
+							minWidth: 130,
+							position: "relative",
+						}}>
+						<VSCodeOption value="deepseek">DeepSeek</VSCodeOption>
+						<VSCodeOption value="qwen">阿里千问</VSCodeOption>
+						<VSCodeOption value="openrouter">OpenRouter</VSCodeOption>
+						<VSCodeOption value="ollama">Ollama</VSCodeOption>
+						<VSCodeOption value="gemini">Google Gemini</VSCodeOption>
+						<VSCodeOption value="anthropic">Anthropic</VSCodeOption>
+						<VSCodeOption value="openai-native">OpenAI</VSCodeOption>
+						<VSCodeOption value="vscode-lm">VS Code LM API</VSCodeOption>
+						<VSCodeOption value="bedrock">AWS Bedrock</VSCodeOption>
+						<VSCodeOption value="vertex">GCP Vertex AI</VSCodeOption>
+						<VSCodeOption value="mistral">Mistral</VSCodeOption>
+						<VSCodeOption value="requesty">Requesty</VSCodeOption>
+						<VSCodeOption value="together">Together</VSCodeOption>
+						<VSCodeOption value="lmstudio">LM Studio</VSCodeOption>
+						<VSCodeOption value="litellm">LiteLLM</VSCodeOption>
+					</VSCodeDropdown>
+
+					{!isPopup && (
+						<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 5 }}>
+							<VSCodeButton
+									appearance="secondary"
+									onClick={() => setShowAddProviderDialog(true)}
+								>新增供应商</VSCodeButton>
+							
+							{(<VSCodeButton
+									appearance="secondary"
+									onClick={() => setShowAddProviderDialog(true)}
+								>编辑供应商</VSCodeButton>)
+							}
+						</div>
+					)}
+				</div>
 			</DropdownContainer>
+
 			{selectedProvider === "anthropic" && (
 				<div>
 					<VSCodeTextField
@@ -1060,22 +1077,6 @@ const ApiOptions = ({ showModelOptions, apiErrorMessage, modelIdErrorMessage, is
 					}}>
 					{modelIdErrorMessage}
 				</p>
-			)}
-
-			{!isPopup && (
-				<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-					{selectedProvider === "openai" ? (
-						<VSCodeButton
-							appearance="secondary"
-							onClick={() => setShowAddProviderDialog(true)}
-						>新增供应商</VSCodeButton>
-					) : dynamicProvider ? (
-						<VSCodeButton
-							appearance="secondary"
-							onClick={() => setShowAddProviderDialog(true)}
-						>删除供应商</VSCodeButton>
-					) : <></>}
-				</div>
 			)}
 
 			<AddProviderDialog

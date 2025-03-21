@@ -126,6 +126,7 @@ export const ExtensionStateContextProvider: React.FC<{
 	useEvent("message", handleMessage)
 
 	useEffect(() => {
+		console.log("[iframe] postMessage(webviewDidLaunch)")
 		vscode.postMessage({ type: "webviewDidLaunch" })
 	}, [])
 
