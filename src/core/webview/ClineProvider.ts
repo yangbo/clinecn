@@ -29,6 +29,7 @@ import { AutoApprovalSettings, DEFAULT_AUTO_APPROVAL_SETTINGS } from "../../shar
 import { BrowserSettings, DEFAULT_BROWSER_SETTINGS } from "../../shared/BrowserSettings"
 import { ChatSettings, DEFAULT_CHAT_SETTINGS } from "../../shared/ChatSettings"
 import { custom } from "zod"
+import { Debugger } from "../../utils/deubg"
 
 /*
 https://github.com/microsoft/vscode-webview-ui-toolkit-samples/blob/main/default/weather-webview/src/providers/WeatherViewProvider.ts
@@ -179,6 +180,7 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 		return findLast(Array.from(this.activeInstances), (instance) => instance.view?.visible === true)
 	}
 
+	// 初始化 webview 视图
 	resolveWebviewView(
 		webviewView: vscode.WebviewView | vscode.WebviewPanel,
 		//context: vscode.WebviewViewResolveContext<unknown>, used to recreate a deallocated webview, but we don't need this since we use retainContextWhenHidden
@@ -197,6 +199,9 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 		// Sets up an event listener to listen for messages passed from the webview view context
 		// and executes code based on the message that is received
 		this.setWebviewMessageListener(webviewView.webview)
+
+		// 初始化 webview 高级调试工具
+		Debugger.initWebview(webviewView.webview)
 
 		// Logs show up in bottom panel > Debug Console
 		//console.log("registering listener")
@@ -499,8 +504,8 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 							// 准备接收 iframe 的 vscode api 消息
 				  			proxyVscode(iframe, window.vsCodeApi);
 						}
-					} else if (event.data.type === 'theme') {
-						console.log("切换主题到：", event.data.text);
+					} else if (event.data.type === 'toggle-theme') {
+						console.log("切换主题到: ", event.data.theme);
 						// 当 debug 过程中切换主题颜色时，扩展会发送 'toggle-theme' 消息，webview html 页面需要接收并处理
 						sendVscodeCssVariablesToIframe();
 						copyDefaultStyles();

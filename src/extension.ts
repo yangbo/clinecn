@@ -180,6 +180,7 @@ export function activate(context: vscode.ExtensionContext) {
 	}
 	context.subscriptions.push(vscode.window.registerUriHandler({ handleUri }))
 
+	// 返回 client api 是为了可以被其他扩展使用
 	return createClineAPI(outputChannel, sidebarProvider)
 }
 
