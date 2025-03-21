@@ -1,5 +1,10 @@
 import * as vscode from 'vscode';
 
+/**
+ * 高级调试工具类，用于实现“高级调试”功能。
+ * 我们称这个技术为“高级vscode扩展开发技术”，
+ * 简称 **“高级扩展DEBUG技术（ADET，Advanced Debug Extension Technology）”**，可以读作 [Adit]。
+ */
 export class AdvanceDebugger {
 
     /**
