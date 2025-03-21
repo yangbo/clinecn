@@ -69,17 +69,32 @@ class VSCodeAPIProxy implements WebviewApi<unknown> {
     window.addEventListener('message', (event) => {
       if (event.data.type === 'vscodeInlineStyles') {
         const htmlElement = document.documentElement;
-        const vscodeStyles = event.data.styles;
+        const htmlStyles = event.data.styles;
         console.log("[iframe] 收到 vscodeInlineStyles 消息: ");
-        // console.log(vscodeStyles);
-        const existingStyle = htmlElement.getAttribute("style") || "";
-        const combinedStyle = `${existingStyle}; ${vscodeStyles}`;
-        htmlElement.setAttribute("style", combinedStyle);
+        // console.log(htmlStyles);
+        // 不需要继承原来的样式，直接覆盖
+        // const existingStyle = htmlElement.getAttribute("style") || "";
+        // const combinedStyle = `${existingStyle}; ${htmlStyles}`;
+        htmlElement.setAttribute("style", htmlStyles);
+
+        // 覆盖 body 的属性
+        const bodyAttributes = event.data.bodyAttributes;
+        console.log("[iframe] 设置 body 属性: ", bodyAttributes);
+        const bodyElement = document.body;
+        for (const key in bodyAttributes) {
+          bodyElement.setAttribute(key, bodyAttributes[key]);
+        }
       }
       
       // 响应来自主帧的 vscodeSetDefaultStyles 消息
       if (event.data.type === 'vscodeSetDefaultStyles') {
           console.log("[iframe] 收到 vscodeSetDefaultStyles 消息，创建<style></style>元素");
+          // 先删除旧的样式元素
+          const oldStyleElement = document.getElementById("_defaultStyles");
+          if (oldStyleElement) {
+            oldStyleElement.remove();
+          }
+          // 创建新的样式元素
 					const newStyleElement = document.createElement('style');
           const styleContent = event.data.styles;
 					newStyleElement.setAttribute('id', "_defaultStyles")

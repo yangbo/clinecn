@@ -80,7 +80,7 @@ const AppContent = () => {
 						console.log("[iframe] 刷新，重新 postMessage(webviewDidLaunch)")
 						vscode.postMessage({ type: "webviewDidLaunch" })
 					}
-				}>刷新</VSCodeButton>
+				}>刷新<span slot="start" className="codicon codicon-sync"></span></VSCodeButton>
 			</>
 		)
 	}

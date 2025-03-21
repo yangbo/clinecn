@@ -402,49 +402,46 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 					channelSetState = new MessageChannel();
 					channelGetState = new MessageChannel();
 
-					// 在 iframe onloaded 事件时再发送 vscode api 到 iframe
-					// iframe.onload = function() {
-						// 代理 vscode.postMesssage() 函数
-						console.log("[main frame] 创建消息通道，实现 postMessage 函数代理");
-						iframe.contentWindow.postMessage({
-							command: 'createChannel',
-							api: "postMessage"
-						}, '*', [channelPostMessage.port2]);
-						// 侦听通道收到的消息
-						channelPostMessage.port1.onmessage = function(event) {
-							console.log("[main frame] 收到 iframe postMessage 消息: ");
-							console.log(event.data);
-							vscode.postMessage(event.data);
-						};
-				
-						// 代理 vscode.getState() 函数
-						console.log("[main frame] 创建消息通道，实现 getState 函数代理");
-						iframe.contentWindow.postMessage({
-							command: 'createChannel',
-							api: "getState"
-						}, '*', [channelGetState.port2]);
-						// 侦听通道收到的消息
-						channelGetState.port1.onmessage = function(event) {
-							console.log("[main frame] 收到 iframe getState 消息: ");
-							console.log(event.data);
-							const state = vscode.getState();
-							// 发送 getState() 结果到 iframe
-							channelGetState.port1.postMessage(state);
-						}
-				
-						// 代理 vscode.setState() 函数
-						console.log("[main frame] 创建消息通道，实现 setState 函数代理");
-						iframe.contentWindow.postMessage({
-							command: 'createChannel',
-							api: "setState"
-						}, '*', [channelSetState.port2]);
-						// 侦听通道收到的消息
-						channelSetState.port1.onmessage = function(event) {
-							console.log("[main frame] 收到 iframe setState 消息: ");
-							console.log(event.data);
-							const state = vscode.setState(event.data);
-						}
-					// }
+					// 代理 vscode.postMesssage() 函数
+					console.log("[main frame] 创建消息通道，实现 postMessage 函数代理");
+					iframe.contentWindow.postMessage({
+						command: 'createChannel',
+						api: "postMessage"
+					}, '*', [channelPostMessage.port2]);
+					// 侦听通道收到的消息
+					channelPostMessage.port1.onmessage = function(event) {
+						console.log("[main frame] 收到 iframe postMessage 消息: ");
+						console.log(event.data);
+						vscode.postMessage(event.data);
+					};
+			
+					// 代理 vscode.getState() 函数
+					console.log("[main frame] 创建消息通道，实现 getState 函数代理");
+					iframe.contentWindow.postMessage({
+						command: 'createChannel',
+						api: "getState"
+					}, '*', [channelGetState.port2]);
+					// 侦听通道收到的消息
+					channelGetState.port1.onmessage = function(event) {
+						console.log("[main frame] 收到 iframe getState 消息: ");
+						console.log(event.data);
+						const state = vscode.getState();
+						// 发送 getState() 结果到 iframe
+						channelGetState.port1.postMessage(state);
+					}
+			
+					// 代理 vscode.setState() 函数
+					console.log("[main frame] 创建消息通道，实现 setState 函数代理");
+					iframe.contentWindow.postMessage({
+						command: 'createChannel',
+						api: "setState"
+					}, '*', [channelSetState.port2]);
+					// 侦听通道收到的消息
+					channelSetState.port1.onmessage = function(event) {
+						console.log("[main frame] 收到 iframe setState 消息: ");
+						console.log(event.data);
+						const state = vscode.setState(event.data);
+					}
 				}
 			
 				// 还没有获取过 vscode api，需要获取
@@ -459,19 +456,39 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 				}
 				const iframe = document.getElementById('myIframe');
 			
-				// 传递 vscode 的 css 样式
-				function sendVscodeCssVariablesToIframe(iframe) {
-				  const variables = {};
-				  // 获取所有CSS变量（自定义属性）
-				  const htmlElement = document.documentElement;
-				  const inlineStyle = htmlElement.getAttribute("style") || "";
-			
-				  iframe.addEventListener('load', () => {
-					console.log("[main frame] 发送 vscode css 变量到 iframe");
-					iframe.contentWindow.postMessage({ type: 'vscodeInlineStyles', styles: inlineStyle }, '*');
-				  });
+				// 传递 vscode 的 css 样式, 它是 <html> 元素上的 style 属性
+				function sendVscodeCssVariablesToIframe() {
+					console.log("[main frame] 发送 html.style 属性(即vscode css 变量) 和 body.style 到 iframe");
+					// 获取 <html> 元素的 style 属性，其中有 --vscode-* CSS变量
+					const htmlElement = document.documentElement;
+					const inlineStyle = htmlElement.getAttribute("style") || "";
+					// 获取 body 元素的属性，因为 webview-ui-toolkit 是靠侦听 body 属性的变化来修改主题颜色的
+					const bodyElement = document.body;
+					const bodyAttributes = {};
+					const attributes = bodyElement.attributes;
+					console.log("[main frame] body 元素的属性: ", attributes);
+					for (let i = 0; i < attributes.length; i++) {
+						const attr = attributes[i];
+						console.log("[main frame] body attribute > ", attr);
+						bodyAttributes[attr.name] = attr.value;
+					}
+					const bodyInlineStyle = bodyElement.getAttribute("style") || "";
+					iframe.contentWindow.postMessage({ type: 'vscodeInlineStyles', styles: inlineStyle, bodyAttributes: bodyAttributes }, '*');
 				}
-				sendVscodeCssVariablesToIframe(iframe);
+				iframe.removeEventListener('load', sendVscodeCssVariablesToIframe);		// 支持重新执行
+				iframe.addEventListener('load', sendVscodeCssVariablesToIframe);
+
+				// 复制动态添加的扩展样式到 iframe 去，它是 <style id='_defaultStyles'> 元素的内容
+				const copyDefaultStyles = () => {
+					console.log("[main frame] 复制 vscode extension 样式表到 iframe 去");
+					const styleElement = document.getElementById('_defaultStyles');
+					const styleContent = styleElement.textContent;
+					// console.log(styleContent);
+					// 这里不能直接设置，要通过 postMessage 方式设置，在 webview-ui/vscode.ts 中响应
+					iframe.contentWindow.postMessage({ type: 'vscodeSetDefaultStyles', styles: styleContent }, '*');
+				};
+				iframe.removeEventListener('load', copyDefaultStyles);		// 支持重新执行
+				iframe.addEventListener('load', copyDefaultStyles);
 
 				// 将收到的 message 传递给 iframe,或者拦截并处理
 				const onMessage = event => {
@@ -482,6 +499,13 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 							// 准备接收 iframe 的 vscode api 消息
 				  			proxyVscode(iframe, window.vsCodeApi);
 						}
+					} else if (event.data.type === 'theme') {
+						console.log("切换主题到：", event.data.text);
+						// 当 debug 过程中切换主题颜色时，扩展会发送 'toggle-theme' 消息，webview html 页面需要接收并处理
+						sendVscodeCssVariablesToIframe();
+						copyDefaultStyles();
+						// 继续转给 iframe
+						iframe.contentWindow.postMessage(event.data, '*');
 					} else {
 						console.log("[main frame] 将收到的 message 传递给 iframe：");
 						console.log(event);
@@ -491,17 +515,6 @@ export class ClineProvider implements vscode.WebviewViewProvider {
 				window.removeEventListener('message', onMessage);		// 支持重新执行
 				window.addEventListener('message', onMessage);
 
-				// 复制动态添加的扩展样式到 iframe 去
-				const onLoad = () => {
-					console.log("[main frame] 复制 vscode extension 样式表到 iframe 去");
-					const styleElement = document.getElementById('_defaultStyles');
-					const styleContent = styleElement.textContent;
-					// console.log(styleContent);
-					// 这里不能直接设置，要通过 postMessage 方式设置，在 webview-ui/vscode.ts 中响应
-					iframe.contentWindow.postMessage({ type: 'vscodeSetDefaultStyles', styles: styleContent }, '*');
-				};
-				iframe.removeEventListener('load', onLoad);		// 支持重新执行
-				iframe.addEventListener('load', onLoad);
 			  </script>
 			</body>
 			</html>

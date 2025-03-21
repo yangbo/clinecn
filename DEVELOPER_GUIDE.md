@@ -62,6 +62,10 @@
 
 还需要进一步研究如何更方便地热重载 *.tsx 文件而不重新编译。
 
+## 预览最终版
+
+执行 `npm run vscode:prepublish` 可以生成最终版本的 webview-ui 内容，可以进行最后的测试。
+
 ## 编辑图标
 
 使用 [boxy svg](https://boxy-svg.com/) 软件编辑图标。

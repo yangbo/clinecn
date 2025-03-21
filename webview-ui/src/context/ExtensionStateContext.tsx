@@ -81,6 +81,7 @@ export const ExtensionStateContextProvider: React.FC<{
 			}
 			case "theme": {
 				if (message.text) {
+					console.log("更新主题context变量 theme：", convertTextMateToHljs(JSON.parse(message.text)))
 					setTheme(convertTextMateToHljs(JSON.parse(message.text)))
 				}
 				break
